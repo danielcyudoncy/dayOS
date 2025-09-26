@@ -5,6 +5,7 @@ import 'package:day_os/data/di/di.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // 👈 IMPORT DOTENV
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart'; // 👈 IMPORT GetStorage
 
@@ -23,6 +24,9 @@ void main() async {
     print('App will continue with fallback/mock data');
     // Continue without Firebase - app will use fallback data
   }
+
+  // Load environment variables
+  await dotenv.load(fileName: ".env");
 
   await GetStorage.init(); // Initialize GetStorage
   await initDependencies(); // Initialize all dependencies

@@ -2,11 +2,16 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http; // 👈 IMPORT HTTP CLIENT
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // 👈 IMPORT DOTENV
 
-// 🔑 IMPORTANT: Replace with your actual OpenAI key
-// Get your key from: https://platform.openai.com/api-keys
-// In production, use environment variables or secure storage!
-const String OPENAI_KEY = 'YOUR_OPENAI_API_KEY_HERE';
+// 🔑 API key loaded from .env file
+String get openaiKey {
+  final key = dotenv.env['OPENAI_API_KEY'];
+  if (key == null || key.isEmpty || key == 'YOUR_OPENAI_API_KEY_HERE') {
+    throw Exception('OpenAI API key not found in .env file. Please add OPENAI_API_KEY to your .env file.');
+  }
+  return key;
+}
 
 class AIService extends GetxService {
   final lastResponse = ''.obs;
@@ -25,7 +30,7 @@ class AIService extends GetxService {
       final response = await _client.post(
         Uri.parse('https://api.openai.com/v1/chat/completions'),
         headers: {
-          'Authorization': 'Bearer $OPENAI_KEY',
+          'Authorization': 'Bearer ${openaiKey}',
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
@@ -58,7 +63,7 @@ class AIService extends GetxService {
       final response = await _client.post(
         Uri.parse('https://api.openai.com/v1/chat/completions'),
         headers: {
-          'Authorization': 'Bearer $OPENAI_KEY',
+          'Authorization': 'Bearer ${openaiKey}',
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
