@@ -33,6 +33,9 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# AI Service file
+**/ai.service.dart
+
 # Symbolication related
 app.*.symbols
 
