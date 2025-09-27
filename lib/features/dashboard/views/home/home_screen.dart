@@ -9,12 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeController>();
 
     return Scaffold(
       appBar: AppBar(
