@@ -18,10 +18,12 @@ import 'package:day_os/features/dashboard/views/recap/evening_recap_screen.dart'
 import 'package:day_os/features/dashboard/views/settings/settings_screen.dart';
 import 'package:day_os/features/tasks/views/tasks/task_manager_screen.dart';
 import 'package:day_os/core/widgets/splash_screen.dart';
+import 'package:day_os/core/widgets/onboarding_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
   static const splash = '/splash';
+  static const onboarding = '/onboarding';
   static const home = '/';
   static const ai_command = '/ai';
   static const calendar = '/calendar';
@@ -38,6 +40,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.splash,
       page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.onboarding,
+      page: () => const OnboardingScreen(),
     ),
     GetPage(
       name: AppRoutes.home,
