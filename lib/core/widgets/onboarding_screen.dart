@@ -1,5 +1,6 @@
 // core/widgets/onboarding_screen.dart
 import 'package:day_os/core/widgets/onboarding_page.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,41 +20,41 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingPageData> _pages = [
     OnboardingPageData(
-      title: "Understand\nthe real benefits",
-      description: "Our portable technology gives your customers knowledge about you. But it also gives you knowledge about your customers, then you will feel your benefits.",
+      title: "Discover\nReal Benefits",
+      description: "Experience the true power of mobile technology. Our solutions give you deep insights about your customers while providing them with exactly what they need from your business.",
       imagePath: "assets/images/onboarding1.png",
       gradient: const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
+          Color(0xFF1a1a2e), // Dark background
           Color(0xFF8B5CF6), // Purple
-          Color(0xFFF97316), // Orange
         ],
       ),
     ),
     OnboardingPageData(
-      title: "All Control\nin your screen",
-      description: "We represents a great opportunity for your business to generate new sales. It also offers easier ways of managing your day-to-day operations through mobile.",
+      title: "Perfect\nControl",
+      description: "Take charge with intuitive mobile controls designed for modern business management. Every feature is crafted to give you complete command over your operations.",
       imagePath: "assets/images/onboarding2.png",
       gradient: const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Color(0xFF8B5CF6), // Purple
-          Color(0xFFF97316), // Orange
+          Color(0xFFf8f9fa), // Light background
+          Color(0xFF6f42c1), // Purple
         ],
       ),
     ),
     OnboardingPageData(
-      title: "Our Tech\nin your hand",
-      description: "You probably own a portable device, such as a smartphone or a tablet - or perhaps both. Just like billions of people around the world, you use your mobile device every day.",
+      title: "Technology\nat Hand",
+      description: "Advanced mobile solutions are now within everyone's reach. Join billions of users who rely on portable technology for daily business and personal productivity.",
       imagePath: "assets/images/onboarding3.png",
       gradient: const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Color(0xFF8B5CF6), // Purple
-          Color(0xFFF97316), // Orange
+          Color(0xFF1a1a2e), // Dark background
+          Color(0xFFf97316), // Orange
         ],
       ),
     ),
@@ -76,12 +77,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   alignment: Alignment.topRight,
                   child: TextButton(
                     onPressed: _skipOnboarding,
-                    child: const Text(
+                    child: Text(
                       "Skip",
-                      style: TextStyle(
+                      style: FontUtil.bodyLarge(
                         color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeights.medium,
                       ),
                     ),
                   ),
@@ -146,9 +146,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       child: Text(
                         _currentPage == _pages.length - 1 ? "Get Started" : "Next",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                        style: FontUtil.bodyLarge(
+                          fontWeight: FontWeights.semiBold,
                         ),
                       ),
                     ),

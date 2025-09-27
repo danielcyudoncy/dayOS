@@ -1,5 +1,6 @@
-// theme/app_theme.dart
+// core/theme/app_theme.dart
 import 'package:flutter/material.dart';
+import 'package:day_os/core/theme/font_util.dart';
 
 class AppTheme {
   static final lightTheme = ThemeData(
@@ -10,6 +11,7 @@ class AppTheme {
       foregroundColor: Colors.indigo,
       elevation: 0,
     ),
-    fontFamily: 'Roboto',
+    fontFamily: FontUtil.fontFamily,
+    textTheme: FontUtil.getTextTheme(),
   );
 }

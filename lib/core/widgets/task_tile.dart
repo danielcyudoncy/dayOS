@@ -2,6 +2,7 @@
 import 'package:day_os/data/models/task.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:day_os/core/theme/font_util.dart';
 
 
 class TaskTile extends StatelessWidget {
@@ -26,9 +27,9 @@ class TaskTile extends StatelessWidget {
        },
        title: Text(
          task.title,
-         style: TextStyle(
+         style: FontUtil.bodyLarge(
            decoration: task.isCompleted ? TextDecoration.lineThrough : null,
-           fontWeight: FontWeight.w500,
+           fontWeight: FontWeights.medium,
          ),
        ),
        secondary: const Icon(Icons.task, color: Colors.indigo),

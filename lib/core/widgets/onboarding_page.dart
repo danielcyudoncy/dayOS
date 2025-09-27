@@ -1,5 +1,6 @@
 // core/widgets/onboarding_page.dart
 import 'package:flutter/material.dart';
+import 'package:day_os/core/theme/font_util.dart';
 
 class OnboardingPageData {
   final String title;
@@ -33,31 +34,23 @@ class OnboardingPage extends StatelessWidget {
           // Illustration/Image placeholder
           Expanded(
             flex: 3,
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(bottom: 40),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Image.asset(
-                data.imagePath,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  // Placeholder when image is not found
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Icon(
-                      Icons.image,
-                      size: 100,
-                      color: Colors.white,
-                    ),
-                  );
-                },
-              ),
+            child: Image.asset(
+              data.imagePath,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                // Placeholder when image is not found
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Icon(
+                    Icons.image,
+                    size: 100,
+                    color: Colors.white,
+                  ),
+                );
+              },
             ),
           ),
 
@@ -65,11 +58,10 @@ class OnboardingPage extends StatelessWidget {
           Text(
             data.title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
+            style: FontUtil.headlineMedium(
               color: Colors.white,
-              height: 1.2,
+              fontWeight: FontWeights.bold,
+              height: LineHeights.normal,
             ),
           ),
 
@@ -79,10 +71,9 @@ class OnboardingPage extends StatelessWidget {
           Text(
             data.description,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
+            style: FontUtil.bodyLarge(
               color: Colors.white.withValues(alpha: 0.9),
-              height: 1.5,
+              height: LineHeights.relaxed,
             ),
           ),
 

@@ -1,5 +1,6 @@
-// presentation/widgets/section_title.dart
+// core/widgets/section_title.dart
 import 'package:flutter/material.dart';
+import 'package:day_os/core/theme/font_util.dart';
 
 class SectionTitle extends StatelessWidget {
   final String title;
@@ -10,10 +11,9 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
+      style: FontUtil.titleLarge(
         color: Colors.grey[800],
+        fontWeight: FontWeights.bold,
       ),
     );
   }

@@ -16,22 +16,14 @@ void main() async {
   // Initialize Firebase
   try {
     await Firebase.initializeApp();
-    print('Firebase initialized successfully');
   } catch (e) {
-    print('Firebase initialization failed: $e');
-    print('This is normal if google-services.json is not configured');
-    print('App will continue with fallback/mock data');
     // Continue without Firebase - app will use fallback data
   }
 
   // Load environment variables (optional - app works without .env file)
   try {
     await dotenv.load(fileName: ".env");
-    print('Environment variables loaded successfully');
   } catch (e) {
-    print('Could not load .env file: $e');
-    print('This is normal if .env file does not exist');
-    print('App will continue with default values');
     // Continue without .env file - app will use fallback values
   }
 
