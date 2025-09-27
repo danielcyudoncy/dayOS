@@ -1,6 +1,7 @@
 // core/widgets/splash_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,8 +45,8 @@ class _SplashScreenState extends State<SplashScreen>
     // Start animation
     _animationController.forward();
 
-    // Navigate to home screen after 4 seconds
-    _navigateToHome();
+    // Navigate to next screen after 4 seconds
+    _navigateToNextScreen();
   }
 
   @override
@@ -54,10 +55,17 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  void _navigateToHome() {
+  void _navigateToNextScreen() {
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
-        Get.offNamed('/');
+        final storage = GetStorage();
+        final hasSeenOnboarding = storage.read('hasSeenOnboarding') ?? false;
+
+        if (hasSeenOnboarding) {
+          Get.offNamed('/');
+        } else {
+          Get.offNamed('/onboarding');
+        }
       }
     });
   }
@@ -124,7 +132,7 @@ class _SplashScreenState extends State<SplashScreen>
                             ),
                             child: Center(
                               child: Text(
-                                'DAYOS',
+                                'DailyOS',
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
