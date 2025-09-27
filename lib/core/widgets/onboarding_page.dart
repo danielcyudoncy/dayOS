@@ -72,7 +72,7 @@ class OnboardingPage extends StatelessWidget {
             data.description,
             textAlign: TextAlign.center,
             style: FontUtil.bodyLarge(
-              color: Colors.white.withValues(alpha: 0.9),
+              color: Colors.white.withValues(alpha: 0.95),
               height: LineHeights.relaxed,
             ),
           ),

@@ -11,10 +11,11 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: FontUtil.titleLarge(
-        color: Colors.grey[800],
-        fontWeight: FontWeights.bold,
+      style: FontUtil.titleMedium(
+        color: Colors.white,
+        
       ),
     );
   }
 }
+

@@ -18,45 +18,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
+  static const _defaultGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0xFF1a1a2e), // Dark background
+      Color(0xFF8B5CF6), // Purple
+    ],
+  );
+
   final List<OnboardingPageData> _pages = [
-    OnboardingPageData(
+    const OnboardingPageData(
       title: "Discover\nReal Benefits",
       description: "Experience the true power of mobile technology. Our solutions give you deep insights about your customers while providing them with exactly what they need from your business.",
       imagePath: "assets/images/onboarding1.png",
-      gradient: const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFF1a1a2e), // Dark background
-          Color(0xFF8B5CF6), // Purple
-        ],
-      ),
+      gradient: _defaultGradient,
     ),
-    OnboardingPageData(
+    const OnboardingPageData(
       title: "Perfect\nControl",
       description: "Take charge with intuitive mobile controls designed for modern business management. Every feature is crafted to give you complete command over your operations.",
       imagePath: "assets/images/onboarding2.png",
-      gradient: const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFFf8f9fa), // Light background
-          Color(0xFF6f42c1), // Purple
-        ],
-      ),
+      gradient: _defaultGradient,
     ),
-    OnboardingPageData(
+    const OnboardingPageData(
       title: "Technology\nat Hand",
       description: "Advanced mobile solutions are now within everyone's reach. Join billions of users who rely on portable technology for daily business and personal productivity.",
       imagePath: "assets/images/onboarding3.png",
-      gradient: const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFF1a1a2e), // Dark background
-          Color(0xFFf97316), // Orange
-        ],
-      ),
+      gradient: _defaultGradient,
     ),
   ];
 
@@ -123,7 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           decoration: BoxDecoration(
                             color: _currentPage == index
                                ? Colors.white
-                               : Colors.white.withValues(alpha: 0.5),
+                               : Colors.white.withValues(alpha: 0.7),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -135,7 +123,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onPressed: _nextPage,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF8B5CF6),
+                        foregroundColor: const Color(0xFF1a1a2e),
+                        elevation: 2,
+                        shadowColor: Colors.black.withValues(alpha: 0.3),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
                           vertical: 12,

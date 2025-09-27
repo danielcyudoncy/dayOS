@@ -2,6 +2,7 @@
 import 'package:day_os/data/models/meeting.dart';
 import 'package:day_os/data/repositories/calendar_repository.dart';
 import 'package:day_os/data/datasources/remote/calendar_firebase_datasource.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CalendarController extends GetxController {
@@ -43,7 +44,12 @@ class CalendarController extends GetxController {
     try {
       await _repository.syncCalendar();
       await loadMeetings(); // Reload meetings after sync
-      Get.snackbar('Synced!', 'Calendar updated successfully ✅');
+      Get.snackbar(
+        'Synced!',
+        'Calendar updated successfully ✅',
+        backgroundColor: Colors.white,
+        colorText: Colors.black,
+      );
     } catch (e) {
       error.value = 'Sync failed. Please try again.';
       print('Error syncing calendars: $e');
@@ -57,14 +63,29 @@ class CalendarController extends GetxController {
       final signedIn = await Get.find<CalendarFirebaseDatasource>().signInToGoogle();
       isSignedInToGoogle.value = signedIn;
       if (signedIn) {
-        Get.snackbar('Success!', 'Signed in to Google Calendar');
+        Get.snackbar(
+          'Success!',
+          'Signed in to Google Calendar',
+          backgroundColor: Colors.white,
+          colorText: Colors.black,
+        );
         await loadMeetings(); // Reload meetings after sign in
       } else {
-        Get.snackbar('Failed', 'Failed to sign in to Google Calendar');
+        Get.snackbar(
+          'Failed',
+          'Failed to sign in to Google Calendar',
+          backgroundColor: Colors.white,
+          colorText: Colors.black,
+        );
       }
     } catch (e) {
       print('Error signing in to Google: $e');
-      Get.snackbar('Error', 'Failed to sign in to Google Calendar');
+      Get.snackbar(
+        'Error',
+        'Failed to sign in to Google Calendar',
+        backgroundColor: Colors.white,
+        colorText: Colors.black,
+      );
     }
   }
 
@@ -73,7 +94,12 @@ class CalendarController extends GetxController {
       final signedOut = await Get.find<CalendarFirebaseDatasource>().signOutFromGoogle();
       isSignedInToGoogle.value = !signedOut;
       if (signedOut) {
-        Get.snackbar('Success!', 'Signed out from Google Calendar');
+        Get.snackbar(
+          'Success!',
+          'Signed out from Google Calendar',
+          backgroundColor: Colors.white,
+          colorText: Colors.black,
+        );
         await loadMeetings(); // Reload meetings after sign out
       }
     } catch (e) {

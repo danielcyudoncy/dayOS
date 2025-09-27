@@ -1,6 +1,7 @@
-// presentation/screens/calendar/calendar_screen.dart
+// features/meetings/views/calendar/calendar_screen.dart
 import 'package:day_os/features/meetings/controllers/calendar_controller.dart';
 import 'package:day_os/core/widgets/meeting_tile.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,38 +15,63 @@ class CalendarScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Calendar'),
+        title: Text('My Calendar', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
+        backgroundColor: const Color(0xFF1a1a2e),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: controller.syncCalendars,
-            icon: const Icon(Icons.sync),
+            icon: const Icon(Icons.sync, color: Colors.white),
           ),
           const SizedBox(width: 8),
         ],
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator.adaptive());
-        }
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1a1a2e), // Dark background
+              Color(0xFF8B5CF6), // Purple
+            ],
+          ),
+        ),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator.adaptive(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            );
+          }
 
-        if (controller.error.value.isNotEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error, color: Colors.red, size: 48),
-                const SizedBox(height: 12),
-                Text(controller.error.value),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: controller.syncCalendars,
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Retry Sync'),
-                ),
-              ],
-            ),
-          );
-        }
+          if (controller.error.value.isNotEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error, color: Colors.red, size: 48),
+                  const SizedBox(height: 12),
+                  Text(
+                    controller.error.value,
+                    style: FontUtil.bodyLarge(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton.icon(
+                    onPressed: controller.syncCalendars,
+                    icon: const Icon(Icons.refresh, color: Color(0xFF1a1a2e)),
+                    label: Text('Retry Sync', style: FontUtil.bodyMedium(color: const Color(0xFF1a1a2e))),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF1a1a2e),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
 
         return Column(
           children: [
@@ -61,7 +87,8 @@ class CalendarScreen extends StatelessWidget {
             ),
           ],
         );
-      }),
+        }),
+      ),
     );
   }
 
@@ -69,15 +96,15 @@ class CalendarScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.indigo[50],
-        border: Border(bottom: BorderSide(color: Colors.indigo[100]!)),
+        color: Colors.white.withValues(alpha: 0.1),
+        border: Border(bottom: BorderSide(color: Colors.white.withValues(alpha: 0.2))),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Connected Accounts',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: FontUtil.titleLarge(color: Colors.white, fontWeight: FontWeights.semiBold),
           ),
           const SizedBox(height: 8),
           Wrap(
@@ -98,23 +125,24 @@ class CalendarScreen extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 8),
-              const Text(
+              Text(
                 'Notify me 5 min before meetings',
-                style: TextStyle(fontSize: 14),
+                style: FontUtil.bodyMedium(color: Colors.white),
               ),
               Switch(
                 value: controller.notifyBeforeMeeting.value,
                 onChanged: controller.toggleNotification,
-                activeThumbColor: Colors.indigo,
+                activeColor: Colors.white,
+                activeTrackColor: Colors.white.withValues(alpha: 0.5),
               ),
             ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              const Icon(Icons.join_inner, color: Colors.indigo, size: 20),
-              const SizedBox(width: 8),
-              const Text('Auto-join meetings', style: TextStyle(fontSize: 14)),
+           ),
+           const SizedBox(height: 8),
+           Row(
+             children: [
+               const Icon(Icons.join_inner, color: Colors.white, size: 20),
+               const SizedBox(width: 8),
+               Text('Auto-join meetings', style: FontUtil.bodyMedium(color: Colors.white)),
               Switch(
                 value: controller.autoJoin.value,
                 onChanged: controller.toggleAutoJoin,

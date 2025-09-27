@@ -1,9 +1,7 @@
-// presentation/widgets/task_list_tile.dart
+// core/widgets/task_list_tile.dart
 import 'package:day_os/features/tasks/controllers/task_controller.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-
 import 'package:day_os/data/models/task.dart';
 
 class TaskListTile extends StatelessWidget {
@@ -27,56 +25,56 @@ class TaskListTile extends StatelessWidget {
         onDismissed: (direction) {
           controller.deleteTask(task.id);
         },
-        child: Obx(
-          () => CheckboxListTile(
-            value: task.isCompleted,
-            onChanged: (value) => controller.toggleTask(task.id),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        task.title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          decoration: task.isCompleted
-                              ? TextDecoration.lineThrough
-                              : null,
-                          color: task.isCompleted ? Colors.grey[600] : null,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+        child: CheckboxListTile(
+          value: task.isCompleted,
+          onChanged: (value) => controller.toggleTask(task.id),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      task.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontFamily: FontUtil.fontFamily,
+                        decoration: task.isCompleted
+                            ? TextDecoration.lineThrough
+                            : null,
+                        color: task.isCompleted ? Colors.grey[600] : null,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    if (!task.isCompleted) _buildPriorityBadge(task.priority),
-                  ],
-                ),
-                if (task.notes.isNotEmpty)
-                  Text(
-                    task.notes,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                      fontStyle: FontStyle.italic,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
-              ],
-            ),
-            subtitle: _buildSubtitle(task),
-            secondary: IconButton(
-              icon: const Icon(Icons.edit, size: 20),
-              onPressed: () => controller.editTask(task),
-              color: Colors.grey,
-            ),
-            controlAffinity: ListTileControlAffinity.leading,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
+                  if (!task.isCompleted) _buildPriorityBadge(task.priority),
+                ],
+              ),
+              if (task.notes.isNotEmpty)
+                Text(
+                  task.notes,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontStyle: FontStyle.italic,
+                    fontFamily: FontUtil.fontFamily,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+            ],
+          ),
+          subtitle: _buildSubtitle(task),
+          secondary: IconButton(
+            icon: const Icon(Icons.edit, size: 20),
+            onPressed: () => controller.editTask(task),
+            color: Colors.grey,
+          ),
+          controlAffinity: ListTileControlAffinity.leading,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
           ),
         ),
       ),
@@ -110,6 +108,7 @@ class TaskListTile extends StatelessWidget {
           color: color,
           fontSize: 10,
           fontWeight: FontWeight.bold,
+          fontFamily: FontUtil.fontFamily,
         ),
       ),
     );
@@ -127,7 +126,7 @@ class TaskListTile extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '${task.dueDate!.month}/${task.dueDate!.day}',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                style: TextStyle(fontSize: 12, color: Colors.grey, fontFamily: FontUtil.fontFamily),
               ),
             ],
           ),
@@ -150,6 +149,7 @@ class TaskListTile extends StatelessWidget {
                     ? Colors.blue[800]
                     : Colors.green[800],
                 fontWeight: FontWeight.bold,
+                fontFamily: FontUtil.fontFamily,
               ),
             ),
           ),

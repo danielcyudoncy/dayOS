@@ -24,7 +24,6 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print('HomeController initialized, loading data...');
 
     // Load fallback data immediately to prevent any hanging
     _loadFallbackData();
@@ -32,20 +31,17 @@ class HomeController extends GetxController {
     // Then try to load real data with timeout protection
     Future.delayed(Duration.zero, () {
       loadData().timeout(const Duration(seconds: 10)).catchError((error) {
-        print('Error in HomeController onInit: $error');
         // Fallback data already loaded above
       }).whenComplete(() {
         // Ensure loading state is always cleared
         if (isLoading.value) {
           isLoading.value = false;
-          print('Forced loading state to false');
         }
       });
     });
   }
 
   void _loadFallbackData() {
-    print('Loading fallback data...');
     todayMeetings.value = [
       Meeting(
         title: 'Team Sync',
@@ -94,23 +90,19 @@ class HomeController extends GetxController {
     ];
 
     isLoading.value = false;
-    print('Fallback data loaded successfully');
   }
 
   Future<void> loadData() async {
-    print('Starting to load data...');
     isLoading.value = true;
 
     // Add overall timeout to prevent hanging
     try {
       await _loadDataWithTimeout().timeout(const Duration(seconds: 15));
     } catch (e) {
-      print('Error or timeout in loadData: $e');
       _loadFallbackData();
     } finally {
       if (isLoading.value) {
         isLoading.value = false;
-        print('Forced loading to false after timeout');
       }
     }
   }
@@ -118,7 +110,6 @@ class HomeController extends GetxController {
   Future<void> _loadDataWithTimeout() async {
 
     try {
-      print('Fetching data from repositories...');
 
       // Add timeout to prevent hanging
       final meetings = await _calendarRepo.getTodaysMeetings().timeout(
@@ -237,8 +228,6 @@ class HomeController extends GetxController {
       ];
     } finally {
       isLoading.value = false; // ✅ Ensure loading always stops
-      print('Data loading completed. isLoading: ${isLoading.value}');
-      print('Meetings: ${todayMeetings.length}, Meals: ${todayMeals.length}, Tasks: ${todayTasks.length}');
     }
   }
 }

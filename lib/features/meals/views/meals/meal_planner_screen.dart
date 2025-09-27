@@ -1,6 +1,7 @@
-// presentation/screens/meals/meal_planner_screen.dart
+// features/meals/views/meals/meal_planner_screen.dart
 import 'package:day_os/features/meals/controllers/meal_controller.dart';
 import 'package:day_os/core/widgets/meal_day_card.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,41 +15,66 @@ class MealPlannerScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meal Planner'),
+        title: Text('Meal Planner', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
+        backgroundColor: const Color(0xFF1a1a2e),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () => _showDietaryPreferencesDialog(context, controller),
-            icon: const Icon(Icons.restaurant_menu),
+            icon: const Icon(Icons.restaurant_menu, color: Colors.white),
           ),
           IconButton(
             onPressed: controller.generateMealPlan,
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh, color: Colors.white),
           ),
         ],
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator.adaptive());
-        }
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1a1a2e), // Dark background
+              Color(0xFF8B5CF6), // Purple
+            ],
+          ),
+        ),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator.adaptive(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            );
+          }
 
-        if (controller.error.value.isNotEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error, color: Colors.red, size: 48),
-                const SizedBox(height: 12),
-                Text(controller.error.value),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: controller.generateMealPlan,
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
-                ),
-              ],
-            ),
-          );
-        }
+          if (controller.error.value.isNotEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error, color: Colors.red, size: 48),
+                  const SizedBox(height: 12),
+                  Text(
+                    controller.error.value,
+                    style: FontUtil.bodyLarge(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton.icon(
+                    onPressed: controller.generateMealPlan,
+                    icon: const Icon(Icons.refresh, color: Color(0xFF1a1a2e)),
+                    label: Text('Retry', style: FontUtil.bodyMedium(color: const Color(0xFF1a1a2e))),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF1a1a2e),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
 
         return Column(
           children: [
@@ -64,7 +90,8 @@ class MealPlannerScreen extends StatelessWidget {
             ),
           ],
         );
-      }),
+        }),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/grocery'),
         backgroundColor: Colors.green,
@@ -77,8 +104,8 @@ class MealPlannerScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.orange[50],
-        border: Border(bottom: BorderSide(color: Colors.orange[100]!)),
+        color: Colors.white.withValues(alpha: 0.1),
+        border: Border(bottom: BorderSide(color: Colors.white.withValues(alpha: 0.2))),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,25 +113,25 @@ class MealPlannerScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Dietary Preferences',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: FontUtil.titleLarge(color: Colors.white, fontWeight: FontWeights.semiBold),
               ),
               const SizedBox(height: 4),
               Text(
                 controller.dietaryPrefs.join(', '),
-                style: const TextStyle(fontSize: 12, color: Colors.orange),
+                style: FontUtil.bodySmall(color: Colors.grey[100]),
               ),
             ],
           ),
           ElevatedButton.icon(
             onPressed: () =>
                 _showDietaryPreferencesDialog(Get.context!, controller),
-            icon: const Icon(Icons.edit, size: 16),
-            label: const Text('Edit', style: TextStyle(fontSize: 12)),
+            icon: const Icon(Icons.edit, size: 16, color: Color(0xFF1a1a2e)),
+            label: Text('Edit', style: FontUtil.bodySmall(color: const Color(0xFF1a1a2e))),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange[200],
-              foregroundColor: Colors.orange[900],
+              backgroundColor: Colors.white,
+              foregroundColor: const Color(0xFF1a1a2e),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -170,7 +197,12 @@ class MealPlannerScreen extends StatelessWidget {
             onPressed: () {
               controller.updateDietaryPreferences(selected);
               Navigator.pop(context);
-              Get.snackbar('Updated', 'Preferences saved ✅');
+              Get.snackbar(
+                'Updated',
+                'Preferences saved ✅',
+                backgroundColor: Colors.white,
+                colorText: Colors.black,
+              );
             },
             child: const Text('Save'),
           ),

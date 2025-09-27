@@ -1,8 +1,9 @@
-// presentation/widgets/meal_day_card.dart
+// core/widgets/meal_day_card.dart
 import 'package:day_os/data/models/meal.dart';
 import 'package:day_os/data/models/meal_day_plan.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/Get.dart';
 
 
 class MealDayCard extends StatelessWidget {
@@ -36,15 +37,15 @@ class MealDayCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   _formatDay(dayPlan.date),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: isToday ? Colors.orange[900] : Colors.grey[800],
+                  style: FontUtil.titleMedium(
+                    fontWeight: FontWeights.bold,
+                    color: isToday ? Colors.orange[900] : Colors.black87,
                   ),
                 ),
                 const Spacer(),
                 Text(
                   _getDayName(dayPlan.date),
-                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  style: FontUtil.bodySmall(color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -73,22 +74,22 @@ class MealDayCard extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                  style: FontUtil.bodyLarge(
+                    fontWeight: FontWeights.medium,
+                    color: Colors.black87,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   meal.name,
-                  style: const TextStyle(fontSize: 14),
+                  style: FontUtil.bodyMedium(color: Colors.black87),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${meal.calories} kcal',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  style: FontUtil.bodySmall(color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -107,8 +108,10 @@ class MealDayCard extends StatelessWidget {
                     : '${meal.name} unmarked',
                 icon: Icon(
                   meal.isLogged ? Icons.check : Icons.undo,
-                  color: meal.isLogged ? Colors.green : Colors.grey,
+                  color: Colors.black,
                 ),
+                backgroundColor: Colors.white,
+                colorText: Colors.black,
               );
             },
           ),

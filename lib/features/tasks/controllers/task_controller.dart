@@ -1,4 +1,4 @@
-// presentation/controllers/task_controller.dart
+// features/tasks/controllers/task_controller.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -91,7 +91,9 @@ class TaskController extends GetxController {
         Get.snackbar(
           'Completed!',
           allTasks[index].title,
-          icon: const Icon(Icons.check),
+          icon: const Icon(Icons.check, color: Colors.black),
+          backgroundColor: Colors.white,
+          colorText: Colors.black,
         );
       }
       allTasks.refresh();
@@ -100,7 +102,12 @@ class TaskController extends GetxController {
 
   void deleteTask(int id) {
     allTasks.removeWhere((task) => task.id == id);
-    Get.snackbar('Deleted', 'Task removed 🗑️');
+    Get.snackbar(
+      'Deleted',
+      'Task removed 🗑️',
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+    );
   }
 
   void generateFromMeeting() {
@@ -130,12 +137,22 @@ class TaskController extends GetxController {
 
       allTasks.addAll(newTasks);
       isLoading.value = false;
-      Get.snackbar('Generated!', '2 tasks created from meetings 🎯');
+      Get.snackbar(
+        'Generated!',
+        '2 tasks created from meetings 🎯',
+        backgroundColor: Colors.white,
+        colorText: Colors.black,
+      );
     });
   }
 
   void editTask(Task task) {
     // In real app: show edit dialog
-    Get.snackbar('Feature', 'Edit task functionality coming soon...');
+    Get.snackbar(
+      'Feature',
+      'Edit task functionality coming soon...',
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+    );
   }
 }

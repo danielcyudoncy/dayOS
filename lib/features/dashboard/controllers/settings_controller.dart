@@ -1,4 +1,4 @@
-// presentation/controllers/settings_controller.dart
+// features/dashboard/controllers/settings_controller.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -48,8 +48,10 @@ class SettingsController extends GetxController {
       '$label ${target.value ? 'connected' : 'disconnected'}',
       icon: Icon(
         target.value ? Icons.check_circle : Icons.cancel,
-        color: target.value ? Colors.green : Colors.red,
+        color: Colors.black,
       ),
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 2),
     );
@@ -89,7 +91,12 @@ class SettingsController extends GetxController {
   }
 
   void signOut() {
-    Get.snackbar('Signed Out', 'You have been signed out successfully');
+    Get.snackbar(
+      'Signed Out',
+      'You have been signed out successfully',
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+    );
     // Add real sign-out logic here (Firebase Auth, clearing local state, etc.)
   }
 }

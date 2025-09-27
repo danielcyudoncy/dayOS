@@ -1,5 +1,6 @@
-// presentation/controllers/grocery_controller.dart
+// features/meals/controllers/grocery_controller.dart
 import 'package:day_os/data/models/grocery_item.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -158,7 +159,12 @@ class GroceryController extends GetxController {
 
   void clearPurchased() {
     groceryItems.removeWhere((item) => item.isPurchased);
-    Get.snackbar('Cleared', 'Removed all purchased items 🛒');
+    Get.snackbar(
+      'Cleared',
+      'Removed all purchased items 🛒',
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+    );
   }
 
   void exportList() {
@@ -175,6 +181,11 @@ class GroceryController extends GetxController {
     // Copy to clipboard so it's actually used
     Clipboard.setData(ClipboardData(text: listText));
 
-    Get.snackbar('Exported', 'List copied to clipboard! Paste anywhere.');
+    Get.snackbar(
+      'Exported',
+      'List copied to clipboard! Paste anywhere.',
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+    );
   }
 }

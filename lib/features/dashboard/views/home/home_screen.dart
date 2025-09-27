@@ -5,6 +5,7 @@ import 'package:day_os/core/widgets/meeting_tile.dart';
 import 'package:day_os/core/widgets/morning_briefing_card.dart';
 import 'package:day_os/core/widgets/section_title.dart';
 import 'package:day_os/core/widgets/task_tile.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,42 +18,56 @@ class HomeScreen extends GetView<HomeController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'DailyOS',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: FontUtil.headlineSmall(
+            color: Colors.white,
+            fontWeight: FontWeights.bold,
+          ),
         ),
         centerTitle: true,
+        backgroundColor: const Color(0xFF1a1a2e),
+        foregroundColor: Colors.white,
        actions: [
           IconButton(
             onPressed: () => Get.toNamed('/calendar'),
-            icon: const Icon(Icons.calendar_today),
+            icon: const Icon(Icons.calendar_today, color: Colors.white),
           ),
           IconButton(
             onPressed: () => Get.toNamed('/meals'),
-            icon: const Icon(Icons.restaurant),
+            icon: const Icon(Icons.restaurant, color: Colors.white),
           ),
           IconButton(
             onPressed: () => Get.toNamed('/tasks'),
-            icon: const Icon(Icons.checklist),
+            icon: const Icon(Icons.checklist, color: Colors.white),
           ),
           IconButton(
             onPressed: () => Get.toNamed('/recap'),
-            icon: const Icon(Icons.nightlight_round),
+            icon: const Icon(Icons.nightlight_round, color: Colors.white),
           ),
           IconButton(
             onPressed: () => Get.toNamed('/settings'),
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.settings, color: Colors.white),
           ),
           const SizedBox(width: 8),
           CircleAvatar(
-            backgroundColor: Colors.indigo[100],
-            child: const Icon(Icons.person, color: Colors.indigo, size: 18),
+            backgroundColor: Colors.white.withValues(alpha: 0.2),
+            child: const Icon(Icons.person, color: Colors.white, size: 18),
           ),
           const SizedBox(width: 12),
         ],
       ),
       body: Container(
-        color: Colors.grey[50], // Ensure light background
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1a1a2e), // Dark background
+              Color(0xFF8B5CF6), // Purple
+            ],
+          ),
+        ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -67,9 +82,18 @@ class HomeScreen extends GetView<HomeController> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircularProgressIndicator.adaptive(),
+                          CircularProgressIndicator.adaptive(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
                           SizedBox(height: 16),
-                          Text('Loading your day...'),
+                          Text(
+                            'Loading your day...',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: 'Raleway',
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -104,7 +128,7 @@ class HomeScreen extends GetView<HomeController> {
               const SectionTitle(title: 'Upcoming Meetings'),
               const SizedBox(height: 8),
               Obx(() => controller.todayMeetings.isEmpty
-                  ? const Center(child: Text('No meetings today'))
+                  ? Center(child: Text('No meetings today', style: FontUtil.bodyLarge(color: Colors.white.withValues(alpha: 0.7))))
                   : Column(
                       children: controller.todayMeetings
                           .map((meeting) => MeetingTile(meeting: meeting))
@@ -116,7 +140,7 @@ class HomeScreen extends GetView<HomeController> {
               const SectionTitle(title: 'Meals Today'),
               const SizedBox(height: 8),
               Obx(() => controller.todayMeals.isEmpty
-                  ? const Center(child: Text('No meals planned'))
+                  ? Center(child: Text('No meals planned', style: FontUtil.bodyLarge(color: Colors.white.withValues(alpha: 0.7))))
                   : Column(
                       children: controller.todayMeals
                           .map((meal) => MealTile(meal: meal))
@@ -128,7 +152,7 @@ class HomeScreen extends GetView<HomeController> {
               const SectionTitle(title: 'Today\'s Tasks'),
               const SizedBox(height: 8),
               Obx(() => controller.todayTasks.isEmpty
-                  ? const Center(child: Text('No tasks today'))
+                  ? Center(child: Text('No tasks today', style: FontUtil.bodyLarge(color: Colors.white.withValues(alpha: 0.7))))
                   : Column(
                       children: controller.todayTasks
                           .map((task) => TaskTile(task: task))
@@ -154,6 +178,7 @@ class HomeScreen extends GetView<HomeController> {
             : Colors.indigo,
         child: Icon(
           DateTime.now().hour < 12 ? Icons.wb_sunny : Icons.mic,
+          color: Colors.white,
           size: 30,
         ),
       ),

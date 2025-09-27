@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:day_os/features/dashboard/controllers/home_controller.dart';
+import 'package:day_os/core/theme/font_util.dart';
 
 class MorningBriefingCard extends StatelessWidget {
    const MorningBriefingCard({super.key});
@@ -27,43 +28,42 @@ class MorningBriefingCard extends StatelessWidget {
            children: [
              Text(
                greeting,
-               style: const TextStyle(
-                 fontSize: 24,
-                 fontWeight: FontWeight.bold,
+               style: FontUtil.titleLarge(
                  color: Colors.indigo,
+                 fontWeight: FontWeights.bold,
                ),
              ),
              const SizedBox(height: 8),
              Obx(() => Text.rich(
                TextSpan(
                  children: [
-                   const TextSpan(
+                   TextSpan(
                      text: 'You have ',
-                     style: TextStyle(color: Colors.black87),
+                     style: FontUtil.bodyLarge(color: Colors.black87),
                    ),
                    TextSpan(
                      text: '${controller.todayMeetings.length} ${controller.todayMeetings.length == 1 ? 'meeting' : 'meetings'}',
-                     style: const TextStyle(fontWeight: FontWeight.bold),
+                     style: FontUtil.bodyMedium(color: Colors.indigo, fontWeight: FontWeights.bold),
                    ),
-                   const TextSpan(
+                   TextSpan(
                      text: ', ',
-                     style: TextStyle(color: Colors.black87),
+                     style: FontUtil.bodyMedium(color: Colors.black87),
                    ),
                    TextSpan(
                      text: '${controller.todayMeals.length} ${controller.todayMeals.length == 1 ? 'meal' : 'meals'} planned',
-                     style: const TextStyle(fontWeight: FontWeight.bold),
+                     style: FontUtil.bodyMedium(color: Colors.indigo, fontWeight: FontWeights.bold),
                    ),
-                   const TextSpan(
+                   TextSpan(
                      text: ', and ',
-                     style: TextStyle(color: Colors.black87),
+                     style: FontUtil.bodyMedium(color: Colors.black87),
                    ),
                    TextSpan(
                      text: '${controller.todayTasks.length} ${controller.todayTasks.length == 1 ? 'task' : 'tasks'}',
-                     style: const TextStyle(fontWeight: FontWeight.bold),
+                     style: FontUtil.bodyMedium(color: Colors.indigo, fontWeight: FontWeights.bold),
                    ),
-                   const TextSpan(
+                   TextSpan(
                      text: '.',
-                     style: TextStyle(color: Colors.black87),
+                     style: FontUtil.bodyMedium(color: Colors.black87),
                    ),
                  ],
                ),
@@ -78,6 +78,7 @@ class MorningBriefingCard extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Day started! Notifications enabled.'),
+                          backgroundColor: Colors.white,
                         ),
                       );
                     },
@@ -96,6 +97,7 @@ class MorningBriefingCard extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('🔊 Playing audio briefing...'),
+                        backgroundColor: Colors.white,
                       ),
                     );
                   },

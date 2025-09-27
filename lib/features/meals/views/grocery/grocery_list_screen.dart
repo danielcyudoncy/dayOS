@@ -1,6 +1,7 @@
-// presentation/screens/grocery/grocery_list_screen.dart
+// features/meals/views/grocery/grocery_list_screen.dart
 import 'package:day_os/data/models/grocery_item.dart';
 import 'package:day_os/features/meals/controllers/grocery_controller.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,22 +15,39 @@ class GroceryListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Grocery List'),
+        title: Text('Grocery List', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
+        backgroundColor: const Color(0xFF1a1a2e),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () => _showAddItemDialog(context, controller),
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, color: Colors.white),
           ),
           IconButton(
             onPressed: controller.exportList,
-            icon: const Icon(Icons.share),
+            icon: const Icon(Icons.share, color: Colors.white),
           ),
         ],
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator.adaptive());
-        }
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1a1a2e), // Dark background
+              Color(0xFF8B5CF6), // Purple
+            ],
+          ),
+        ),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator.adaptive(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            );
+          }
 
         if (controller.groceryItems.isEmpty) {
           return Center(
@@ -38,21 +56,21 @@ class GroceryListScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.shopping_cart_outlined,
                     size: 64,
-                    color: Colors.green,
+                    color: Colors.white.withValues(alpha: 0.8),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
+                  Text(
                     'Your grocery list is empty',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: FontUtil.headlineMedium(color: Colors.white, fontWeight: FontWeights.semiBold),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Plan meals first, and we’ll auto-generate your shopping list!',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  Text(
+                    'Plan meals first, and we\'ll auto-generate your shopping list!',
+                    style: FontUtil.bodyMedium(color: Colors.white.withValues(alpha: 0.7)),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
@@ -76,7 +94,8 @@ class GroceryListScreen extends StatelessWidget {
             return _buildCategorySection(category, items);
           },
         );
-      }),
+        }),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: controller.clearPurchased,
         backgroundColor: Colors.red,
@@ -109,12 +128,12 @@ class GroceryListScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   category,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: FontUtil.titleMedium(color: Colors.black87, fontWeight: FontWeights.bold),
                 ),
                 const Spacer(),
                 Text(
                   '${items.length} item${items.length == 1 ? '' : 's'}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  style: FontUtil.bodySmall(color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -145,26 +164,25 @@ class GroceryListScreen extends StatelessWidget {
               children: [
                 Text(
                   item.name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                  style: FontUtil.bodyLarge(
+                    fontWeight: FontWeights.medium,
                     decoration: item.isPurchased
                         ? TextDecoration.lineThrough
                         : null,
-                    color: item.isPurchased ? Colors.grey[600] : null,
+                    color: item.isPurchased ? Colors.grey[600] : Colors.black87,
                   ),
                 ),
                 if (item.notes.isNotEmpty)
                   Text(
                     item.notes,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                    style: FontUtil.bodySmall(color: Colors.grey[600]),
                   ),
               ],
             ),
           ),
           Text(
             item.quantity,
-            style: TextStyle(
-              fontSize: 14,
+            style: FontUtil.bodyMedium(
               color: item.isPurchased ? Colors.grey[500] : Colors.grey[700],
             ),
           ),

@@ -21,7 +21,9 @@ class TaskTile extends StatelessWidget {
            Get.snackbar(
              'Task Completed',
              task.title,
-             icon: const Icon(Icons.check),
+             icon: const Icon(Icons.check, color: Colors.black),
+             backgroundColor: Colors.white,
+             colorText: Colors.black,
            );
          }
        },

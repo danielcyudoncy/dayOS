@@ -1,6 +1,7 @@
-// presentation/screens/ai_assistant/ai_command_screen.dart
+// features/ai_assistant/views/ai_assistant/ai_command_screen.dart
 
 import 'package:day_os/features/ai_assistant/controllers/ai_controller.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,13 +15,26 @@ class AICommandScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your AI Assistant'),
+        title: Text('Your AI Assistant', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
+        backgroundColor: const Color(0xFF1a1a2e),
+        foregroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Get.back(),
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
       ),
-      body: SafeArea(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1a1a2e), // Dark background
+              Color(0xFF8B5CF6), // Purple
+            ],
+          ),
+        ),
+        child: SafeArea(
         child: Column(
           children: [
             // Input Area
@@ -30,8 +44,10 @@ class AICommandScreen extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
+                  return Center(
+                    child: CircularProgressIndicator.adaptive(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
                   );
                 }
 
@@ -44,9 +60,8 @@ class AICommandScreen extends StatelessWidget {
                         const SizedBox(height: 12),
                         Text(
                           controller.error.value,
-                          style: const TextStyle(
+                          style: FontUtil.bodyLarge(
                             color: Colors.red,
-                            fontSize: 16,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -70,6 +85,7 @@ class AICommandScreen extends StatelessWidget {
             ),
           ],
         ),
+        ),
       ),
     );
   }
@@ -84,8 +100,9 @@ class AICommandScreen extends StatelessWidget {
               controller: controller.textController,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.grey[100],
+                fillColor: Colors.white.withValues(alpha: 0.9),
                 hintText: 'Ask anything...',
+                hintStyle: TextStyle(color: Colors.grey[600]),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none,
@@ -95,13 +112,15 @@ class AICommandScreen extends StatelessWidget {
                   vertical: 16,
                 ),
               ),
+              style: FontUtil.bodyLarge(color: Colors.black),
               onSubmitted: (value) => controller.processCommand(),
             ),
           ),
           const SizedBox(width: 12),
           FloatingActionButton(
             onPressed: controller.processCommand,
-            backgroundColor: Colors.indigo,
+            backgroundColor: Colors.white,
+            foregroundColor: const Color(0xFF1a1a2e),
             child: const Icon(Icons.send, size: 24),
           ),
         ],
@@ -116,17 +135,17 @@ class AICommandScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.mic, size: 64, color: Colors.indigo),
+            Icon(Icons.mic, size: 64, color: Colors.white.withValues(alpha: 0.8)),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'How can I help you today?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: FontUtil.headlineMedium(color: Colors.white, fontWeight: FontWeights.semiBold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Try: “Summarize my last meeting” or “Plan meals for tomorrow”',
-              style: TextStyle(color: Colors.grey, fontSize: 14),
+            Text(
+              'Try: "Summarize my last meeting" or "Plan meals for tomorrow"',
+              style: FontUtil.bodyMedium(color: Colors.white.withValues(alpha: 0.7)),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -148,14 +167,14 @@ class AICommandScreen extends StatelessWidget {
 
   Widget _buildSuggestionChip(String label) {
     return FilterChip(
-      label: Text(label, style: const TextStyle(fontSize: 12)),
+      label: Text(label, style: FontUtil.bodySmall(color: Colors.indigo)),
       onSelected: (value) {
         final controller = Get.find<AIController>();
         controller.textController.text = label;
         controller.processCommand();
       },
-      backgroundColor: Colors.indigo[50],
-      labelStyle: TextStyle(color: Colors.indigo[900]),
+      backgroundColor: Colors.white.withValues(alpha: 0.9),
+      labelStyle: FontUtil.bodySmall(color: Colors.indigo),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     );
   }
@@ -182,12 +201,12 @@ class AICommandScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.indigo[50],
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
               item.query,
-              style: const TextStyle(fontWeight: FontWeight.w500),
+              style: FontUtil.bodyLarge(color: Colors.white, fontWeight: FontWeights.medium),
             ),
           ),
           const SizedBox(height: 8),
@@ -195,10 +214,13 @@ class AICommandScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.grey[100],
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Text(item.response, style: const TextStyle(fontSize: 14)),
+            child: Text(
+              item.response,
+              style: FontUtil.bodyMedium(color: Colors.white.withValues(alpha: 0.9)),
+            ),
           ),
         ],
       ),

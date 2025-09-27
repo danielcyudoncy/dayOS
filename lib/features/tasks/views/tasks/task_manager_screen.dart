@@ -1,6 +1,7 @@
-// presentation/screens/tasks/task_manager_screen.dart
+// features/tasks/views/tasks/task_manager_screen.dart
 import 'package:day_os/features/tasks/controllers/task_controller.dart';
 import 'package:day_os/core/widgets/task_list_tile.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,24 +15,41 @@ class TaskManagerScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Tasks'),
+        title: Text('My Tasks', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
+        backgroundColor: const Color(0xFF1a1a2e),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () => _showAddTaskDialog(context, controller),
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, color: Colors.white),
           ),
           IconButton(
             onPressed: controller.generateFromMeeting,
-            icon: const Icon(Icons.auto_awesome),
+            icon: const Icon(Icons.auto_awesome, color: Colors.white),
           ),
         ],
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator.adaptive());
-        }
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1a1a2e), // Dark background
+              Color(0xFF8B5CF6), // Purple
+            ],
+          ),
+        ),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator.adaptive(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            );
+          }
 
-        final workTasks = controller.workTasks;
+          final workTasks = controller.workTasks;
         final personalTasks = controller.personalTasks;
         final completedTasks = controller.completedTasks;
 
@@ -86,6 +104,7 @@ class TaskManagerScreen extends StatelessWidget {
           ),
         );
       }),
+      ),
     );
   }
 
@@ -102,6 +121,7 @@ class TaskManagerScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 18,
               color: color,
+              fontFamily: 'Raleway',
             ),
           ),
           const Spacer(),
@@ -132,17 +152,17 @@ class TaskManagerScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.checklist, size: 64, color: Colors.indigo),
+            Icon(Icons.checklist, size: 64, color: Colors.white.withValues(alpha: 0.7)),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'No tasks yet',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Add tasks manually or let AI create them from meetings!',
-              style: TextStyle(color: Colors.grey, fontSize: 14),
+              style: FontUtil.bodyMedium(color: Colors.white.withValues(alpha: 0.7)),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -294,7 +314,12 @@ class TaskManagerScreen extends StatelessWidget {
                   dueDate: dueDate,
                 );
                 Navigator.pop(context);
-                Get.snackbar('Added', 'Task created successfully ✅');
+                Get.snackbar(
+                  'Added',
+                  'Task created successfully ✅',
+                  backgroundColor: Colors.white,
+                  colorText: Colors.black,
+                );
               }
             },
             child: const Text('Create'),

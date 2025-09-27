@@ -1,6 +1,7 @@
-// presentation/screens/settings/settings_screen.dart
+// features/dashboard/views/settings/settings_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import '../../controllers/settings_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -12,12 +13,23 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
-        backgroundColor: Colors.grey[100],
-        foregroundColor: Colors.indigo,
+        title: Text('Settings', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
+        backgroundColor: const Color(0xFF1a1a2e),
+        foregroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Obx(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1a1a2e), // Dark background
+              Color(0xFF8B5CF6), // Purple
+            ],
+          ),
+        ),
+        child: Obx(
         () => ListView(
           padding: const EdgeInsets.all(16),
           children: [
@@ -105,47 +117,53 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
             _buildSectionHeader('Privacy & Notifications'),
             SwitchListTile.adaptive(
-              title: const Text('Push Notifications'),
-              subtitle: const Text(
-                'Meeting reminders, meal alerts, task due dates',
+              title:  Text('Push Notifications',  style: FontUtil.bodyLarge(color: Colors.white)),
+              subtitle:  Text(
+                'Meeting reminders, meal alerts, task due dates',style: FontUtil.bodySmall(color: Colors.white)
               ),
               value: controller.notificationsEnabled.value,
               onChanged: (_) => controller.toggleNotifications(),
-              activeThumbColor: Colors.indigo,
+              activeThumbColor: Colors.white,
             ),
             SwitchListTile.adaptive(
-              title: const Text('Meeting Recording'),
-              subtitle: const Text(
-                'Record meetings for AI transcription (stored securely)',
-              ),
+              title:  Text('Meeting Recording', style: FontUtil.bodyLarge(color: Colors.white)),
+              subtitle:  Text(
+                'Record meetings for AI transcription (stored securely)',style: FontUtil.bodySmall(color: Colors.white)),
               value: controller.meetingRecordingEnabled.value,
               onChanged: (_) => controller.toggleMeetingRecording(),
-             activeThumbColor: Colors.red,
+              activeThumbColor: Colors.white,
             ),
             ListTile(
-              leading: const Icon(Icons.lock, color: Colors.grey),
-              title: const Text('Privacy Policy'),
+              leading: const Icon(Icons.lock, color: Colors.white),
+              title: Text('Privacy Policy', style: FontUtil.bodyLarge(color: Colors.white)),
               trailing: const Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: Colors.grey,
+                color: Colors.white,
               ),
               onTap: () {
-                Get.snackbar('Privacy', 'Privacy policy will open in browser');
+                Get.snackbar(
+                  'Privacy',
+                  'Privacy policy will open in browser',
+                  backgroundColor: Colors.white,
+                  colorText: Colors.black,
+                );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.info, color: Colors.grey),
-              title: const Text('About DailyOS'),
+              leading: const Icon(Icons.info, color: Colors.white),
+              title: Text('About DailyOS', style: FontUtil.bodyLarge(color: Colors.white)),
               trailing: const Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: Colors.grey,
+                color: Colors.white,
               ),
               onTap: () {
                 Get.snackbar(
                   'About',
                   'DailyOS v1.0 • Your Personal Daily Operating System',
+                  backgroundColor: Colors.white,
+                  colorText: Colors.black,
                 );
               },
             ),
@@ -159,7 +177,8 @@ class SettingsScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.red),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[200],
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.red,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
                     vertical: 16,
@@ -171,7 +190,7 @@ class SettingsScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 
   Widget _buildSectionHeader(String title) {
@@ -179,10 +198,9 @@ class SettingsScreen extends StatelessWidget {
       margin: const EdgeInsets.only(top: 16, bottom: 8),
       child: Text(
         title,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.grey[700],
+        style: FontUtil.titleLarge(
+          color: Colors.white,
+          fontWeight: FontWeights.semiBold,
         ),
       ),
     );
@@ -301,7 +319,12 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () {
               controller.updateDietaryPreferences(selected);
               Navigator.pop(context);
-              Get.snackbar('Updated', 'Preferences saved ✅');
+              Get.snackbar(
+                'Updated',
+                'Preferences saved ✅',
+                backgroundColor: Colors.white,
+                colorText: Colors.black,
+              );
             },
             child: const Text('Save'),
           ),
@@ -361,9 +384,19 @@ class SettingsScreen extends StatelessWidget {
                   start < end) {
                 controller.updateWorkHours(start, end);
                 Navigator.pop(context);
-                Get.snackbar('Updated', 'Work hours saved ✅');
+                Get.snackbar(
+                  'Updated',
+                  'Work hours saved ✅',
+                  backgroundColor: Colors.white,
+                  colorText: Colors.black,
+                );
               } else {
-                Get.snackbar('Error', 'Please enter valid hours (0-23)');
+                Get.snackbar(
+                  'Error',
+                  'Please enter valid hours (0-23)',
+                  backgroundColor: Colors.white,
+                  colorText: Colors.black,
+                );
               }
             },
             child: const Text('Save'),
