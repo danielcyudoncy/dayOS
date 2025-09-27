@@ -52,77 +52,95 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(width: 12),
         ],
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator.adaptive(),
-                SizedBox(height: 16),
-                Text('Loading your day...'),
-              ],
-            ),
-          );
-        }
+      body: Container(
+        color: Colors.grey[50], // Ensure light background
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Loading indicator - only this widget needs to be reactive
+              Obx(() {
+                if (controller.isLoading.value) {
+                  return const SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator.adaptive(),
+                          SizedBox(height: 16),
+                          Text('Loading your day...'),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink(); // Empty widget when not loading
+              }),
 
-        return Container(
-          color: Colors.grey[50], // Ensure light background
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Debug info
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  color: Colors.yellow[100],
-                  child: Text(
-                    'DEBUG: Loading: ${controller.isLoading.value}, '
-                    'Meetings: ${controller.todayMeetings.length}, '
-                    'Meals: ${controller.todayMeals.length}, '
-                    'Tasks: ${controller.todayTasks.length}',
-                    style: const TextStyle(fontSize: 12, color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const MorningBriefingCard(),
-                const SizedBox(height: 32),
-                SectionTitle(title: 'Upcoming Meetings'),
-                const SizedBox(height: 8),
-                controller.todayMeetings.isEmpty
-                    ? const Center(child: Text('No meetings today'))
-                    : Column(
-                        children: controller.todayMeetings
-                            .map((meeting) => MeetingTile(meeting: meeting))
-                            .toList(),
-                      ),
-                const SizedBox(height: 32),
-                SectionTitle(title: 'Meals Today'),
-                const SizedBox(height: 8),
-                controller.todayMeals.isEmpty
-                    ? const Center(child: Text('No meals planned'))
-                    : Column(
-                        children: controller.todayMeals
-                            .map((meal) => MealTile(meal: meal))
-                            .toList(),
-                      ),
-                const SizedBox(height: 32),
-                SectionTitle(title: 'Today\'s Tasks'),
-                const SizedBox(height: 8),
-                controller.todayTasks.isEmpty
-                    ? const Center(child: Text('No tasks today'))
-                    : Column(
-                        children: controller.todayTasks
-                            .map((task) => TaskTile(task: task))
-                            .toList(),
-                      ),
-                const SizedBox(height: 60), // for FAB
-              ],
-            ),
+              // Debug info - only reactive to loading state
+              Obx(() {
+                if (controller.isLoading.value) {
+                  return Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.yellow[100],
+                    child: Text(
+                      'DEBUG: Loading: ${controller.isLoading.value}, '
+                      'Meetings: ${controller.todayMeetings.length}, '
+                      'Meals: ${controller.todayMeals.length}, '
+                      'Tasks: ${controller.todayTasks.length}',
+                      style: const TextStyle(fontSize: 12, color: Colors.black),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              }),
+
+              // Main content - separate widgets for better performance
+              const MorningBriefingCard(),
+
+              const SizedBox(height: 32),
+
+              const SectionTitle(title: 'Upcoming Meetings'),
+              const SizedBox(height: 8),
+              Obx(() => controller.todayMeetings.isEmpty
+                  ? const Center(child: Text('No meetings today'))
+                  : Column(
+                      children: controller.todayMeetings
+                          .map((meeting) => MeetingTile(meeting: meeting))
+                          .toList(),
+                    )),
+
+              const SizedBox(height: 32),
+
+              const SectionTitle(title: 'Meals Today'),
+              const SizedBox(height: 8),
+              Obx(() => controller.todayMeals.isEmpty
+                  ? const Center(child: Text('No meals planned'))
+                  : Column(
+                      children: controller.todayMeals
+                          .map((meal) => MealTile(meal: meal))
+                          .toList(),
+                    )),
+
+              const SizedBox(height: 32),
+
+              const SectionTitle(title: 'Today\'s Tasks'),
+              const SizedBox(height: 8),
+              Obx(() => controller.todayTasks.isEmpty
+                  ? const Center(child: Text('No tasks today'))
+                  : Column(
+                      children: controller.todayTasks
+                          .map((task) => TaskTile(task: task))
+                          .toList(),
+                    )),
+
+              const SizedBox(height: 60), // for FAB
+            ],
           ),
-        );
-      }),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Check if it's morning (before 12 PM)

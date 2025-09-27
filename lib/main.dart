@@ -4,7 +4,6 @@ import 'package:day_os/core/theme/app_theme.dart';
 import 'package:day_os/data/di/di.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart'; // 👈 IMPORT DOTENV
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart'; // 👈 IMPORT GetStorage
@@ -25,8 +24,16 @@ void main() async {
     // Continue without Firebase - app will use fallback data
   }
 
-  // Load environment variables
-  await dotenv.load(fileName: ".env");
+  // Load environment variables (optional - app works without .env file)
+  try {
+    await dotenv.load(fileName: ".env");
+    print('Environment variables loaded successfully');
+  } catch (e) {
+    print('Could not load .env file: $e');
+    print('This is normal if .env file does not exist');
+    print('App will continue with default values');
+    // Continue without .env file - app will use fallback values
+  }
 
   await GetStorage.init(); // Initialize GetStorage
   await initDependencies(); // Initialize all dependencies
@@ -43,7 +50,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.lightTheme, // Ensure no dark mode
       themeMode: ThemeMode.light, // Force light mode
-      initialRoute: AppRoutes.HOME,
+      initialRoute: AppRoutes.splash,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
     );

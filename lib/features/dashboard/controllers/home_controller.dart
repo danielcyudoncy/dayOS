@@ -6,6 +6,7 @@ import 'package:day_os/data/repositories/calendar_repository.dart';
 import 'package:day_os/data/repositories/meal_repository.dart';
 import 'package:day_os/data/repositories/task_repository.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 
 class HomeController extends GetxController {
   final CalendarRepository _calendarRepo;
@@ -24,10 +25,22 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     print('HomeController initialized, loading data...');
-    loadData().catchError((error) {
-      print('Error in HomeController onInit: $error');
-      // Ensure we have fallback data even if everything fails
-      _loadFallbackData();
+
+    // Load fallback data immediately to prevent any hanging
+    _loadFallbackData();
+
+    // Then try to load real data with timeout protection
+    Future.delayed(Duration.zero, () {
+      loadData().timeout(const Duration(seconds: 10)).catchError((error) {
+        print('Error in HomeController onInit: $error');
+        // Fallback data already loaded above
+      }).whenComplete(() {
+        // Ensure loading state is always cleared
+        if (isLoading.value) {
+          isLoading.value = false;
+          print('Forced loading state to false');
+        }
+      });
     });
   }
 
@@ -87,6 +100,22 @@ class HomeController extends GetxController {
   Future<void> loadData() async {
     print('Starting to load data...');
     isLoading.value = true;
+
+    // Add overall timeout to prevent hanging
+    try {
+      await _loadDataWithTimeout().timeout(const Duration(seconds: 15));
+    } catch (e) {
+      print('Error or timeout in loadData: $e');
+      _loadFallbackData();
+    } finally {
+      if (isLoading.value) {
+        isLoading.value = false;
+        print('Forced loading to false after timeout');
+      }
+    }
+  }
+
+  Future<void> _loadDataWithTimeout() async {
 
     try {
       print('Fetching data from repositories...');

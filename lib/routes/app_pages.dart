@@ -17,64 +17,70 @@ import 'package:day_os/features/dashboard/views/morning/morning_briefing_screen.
 import 'package:day_os/features/dashboard/views/recap/evening_recap_screen.dart';
 import 'package:day_os/features/dashboard/views/settings/settings_screen.dart';
 import 'package:day_os/features/tasks/views/tasks/task_manager_screen.dart';
+import 'package:day_os/core/widgets/splash_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
-  static const HOME = '/';
-  static const AI_COMMAND = '/ai';
-  static const CALENDAR = '/calendar';
-  static const MEALS = '/meals';
-  static const GROCERY = '/grocery';
-  static const TASKS = '/tasks';
-  static const RECAP = '/recap';
-  static const MORNING = '/morning';
-  static const SETTINGS = '/settings';  // NEW
+  static const splash = '/splash';
+  static const home = '/';
+  static const ai_command = '/ai';
+  static const calendar = '/calendar';
+  static const meals = '/meals';
+  static const grocery = '/grocery';
+  static const tasks = '/tasks';
+  static const recap = '/recap';
+  static const morning = '/morning';
+  static const settings = '/settings';  // NEW
 }
 
 class AppPages {
   static final routes = [
     GetPage(
-      name: AppRoutes.HOME,
+      name: AppRoutes.splash,
+      page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.home,
       page: () => const HomeScreen(),
       binding: HomeBinding(),
     ),
     GetPage(
-      name: AppRoutes.AI_COMMAND,
+      name: AppRoutes.ai_command,
       page: () => const AICommandScreen(),
       binding: AIBinding(),
     ),
     GetPage(
-      name: AppRoutes.CALENDAR,
+      name: AppRoutes.calendar,
       page: () => const CalendarScreen(),
       binding: CalendarBinding(),
     ),
     GetPage(
-      name: AppRoutes.MEALS,
+      name: AppRoutes.meals,
       page: () => const MealPlannerScreen(),
       binding: MealBinding(),
     ),
     GetPage(
-      name: AppRoutes.GROCERY,
+      name: AppRoutes.grocery,
       page: () => const GroceryListScreen(),
       binding: GroceryBinding(),
     ),
     GetPage(
-      name: AppRoutes.TASKS,
+      name: AppRoutes.tasks,
       page: () => const TaskManagerScreen(),
       binding: TaskBinding(),
     ),
     GetPage(
-      name: AppRoutes.RECAP,
+      name: AppRoutes.recap,
       page: () => const EveningRecapScreen(),
       binding: RecapBinding(),
     ),
     GetPage(
-      name: AppRoutes.MORNING,
+      name: AppRoutes.morning,
       page: () => const MorningBriefingScreen(),
       binding: MorningBinding(), // NEW
     ),
      GetPage(
-      name: AppRoutes.SETTINGS,
+      name: AppRoutes.settings,
       page: () => const SettingsScreen(),
       binding: SettingsBinding(), // NEW
     ),
