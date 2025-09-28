@@ -61,8 +61,7 @@ class OnboardingPage extends StatelessWidget {
             style: FontUtil.headlineMedium(
               color: Colors.white,
               fontWeight: FontWeights.bold,
-              height: LineHeights.normal,
-            ),
+              height: LineHeights.normal,            ),
           ),
 
           const SizedBox(height: 24),

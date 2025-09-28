@@ -101,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen>
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(0.1),
+                    Colors.black.withValues(alpha: 0.1),
                   ],
                 ),
               ),
@@ -123,10 +123,10 @@ class _SplashScreenState extends State<SplashScreen>
                             width: 150,
                             height: 150,
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.1),
+                              color: Colors.white.withValues(alpha: .1),
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.3),
+                                color: Colors.white.withValues(alpha: .3),
                                 width: 2,
                               ),
                             ),
@@ -136,7 +136,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white.withOpacity(0.9),
+                                  color: Colors.white.withValues(alpha:0.9),
                                   letterSpacing: 4,
                                 ),
                               ),

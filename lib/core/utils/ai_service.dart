@@ -30,7 +30,7 @@ class AIService extends GetxService {
       final response = await _client.post(
         Uri.parse('https://api.openai.com/v1/chat/completions'),
         headers: {
-          'Authorization': 'Bearer ${openaiKey}',
+          'Authorization': 'Bearer $openaiKey',
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
@@ -63,7 +63,7 @@ class AIService extends GetxService {
       final response = await _client.post(
         Uri.parse('https://api.openai.com/v1/chat/completions'),
         headers: {
-          'Authorization': 'Bearer ${openaiKey}',
+          'Authorization': 'Bearer $openaiKey',
           'Content-Type': 'application/json',
         },
         body: jsonEncode({

@@ -29,20 +29,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingPageData> _pages = [
     const OnboardingPageData(
-      title: "Discover\nReal Benefits",
-      description: "Experience the true power of mobile technology. Our solutions give you deep insights about your customers while providing them with exactly what they need from your business.",
+      title: "Your Day, Perfectly Orchestrated",
+      description: "Meet your AI-powered daily assistant that seamlessly blends work productivity with personal wellness — so you can thrive, not just survive",
       imagePath: "assets/images/onboarding1.png",
       gradient: _defaultGradient,
     ),
     const OnboardingPageData(
-      title: "Perfect\nControl",
-      description: "Take charge with intuitive mobile controls designed for modern business management. Every feature is crafted to give you complete command over your operations.",
+      title: "Work Smarter, Not Harder",
+      description: "Auto-join meetings, get AI-powered summaries with action items, and turn discussions into tasks — all while you focus on what matters most",
       imagePath: "assets/images/onboarding2.png",
       gradient: _defaultGradient,
     ),
     const OnboardingPageData(
-      title: "Technology\nat Hand",
-      description: "Advanced mobile solutions are now within everyone's reach. Join billions of users who rely on portable technology for daily business and personal productivity.",
+      title: "Nourish Your Body, Fuel Your Mind",
+      description: "Get balanced meal suggestions, auto-generated grocery lists, and smart reminders that adapt to your schedule — because peak performance starts with wellness",
       imagePath: "assets/images/onboarding3.png",
       gradient: _defaultGradient,
     ),

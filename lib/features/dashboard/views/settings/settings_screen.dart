@@ -119,7 +119,8 @@ class SettingsScreen extends StatelessWidget {
             SwitchListTile.adaptive(
               title:  Text('Push Notifications',  style: FontUtil.bodyLarge(color: Colors.white)),
               subtitle:  Text(
-                'Meeting reminders, meal alerts, task due dates',style: FontUtil.bodySmall(color: Colors.white)
+                'Meeting reminders, meal alerts, task due dates',
+                style: FontUtil.bodySmall(color: Colors.white)
               ),
               value: controller.notificationsEnabled.value,
               onChanged: (_) => controller.toggleNotifications(),
@@ -128,7 +129,8 @@ class SettingsScreen extends StatelessWidget {
             SwitchListTile.adaptive(
               title:  Text('Meeting Recording', style: FontUtil.bodyLarge(color: Colors.white)),
               subtitle:  Text(
-                'Record meetings for AI transcription (stored securely)',style: FontUtil.bodySmall(color: Colors.white)),
+                'Record meetings for AI transcription (stored securely)',
+                style: FontUtil.bodySmall(color: Colors.white)),
               value: controller.meetingRecordingEnabled.value,
               onChanged: (_) => controller.toggleMeetingRecording(),
               activeThumbColor: Colors.white,
@@ -419,44 +421,95 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RadioListTile<String>(
-                title: const Text('Professional'),
-                subtitle: const Text('Concise, business-focused responses'),
-                value: 'Professional',
-                groupValue: controller.aiPersonality.value,
-                onChanged: (value) {
-                  if (value != null) {
-                    controller.updateAIPersonality(value);
-                    Navigator.pop(context);
-                  }
+              _customRadioTile(
+                title: 'Professional',
+                subtitle: 'Concise, business-focused responses',
+                isSelected: controller.aiPersonality.value == 'Professional',
+                onTap: () {
+                  controller.updateAIPersonality('Professional');
+                  Navigator.pop(context);
                 },
               ),
-              RadioListTile<String>(
-                title: const Text('Friendly'),
-                subtitle: const Text('Warm, conversational tone'),
-                value: 'Friendly',
-                groupValue: controller.aiPersonality.value,
-                onChanged: (value) {
-                  if (value != null) {
-                    controller.updateAIPersonality(value);
-                    Navigator.pop(context);
-                  }
+              _customRadioTile(
+                title: 'Friendly',
+                subtitle: 'Warm, conversational tone',
+                isSelected: controller.aiPersonality.value == 'Friendly',
+                onTap: () {
+                  controller.updateAIPersonality('Friendly');
+                  Navigator.pop(context);
                 },
               ),
-              RadioListTile<String>(
-                title: const Text('Minimalist'),
-                subtitle: const Text('Short, direct answers only'),
-                value: 'Minimalist',
-                groupValue: controller.aiPersonality.value,
-                onChanged: (value) {
-                  if (value != null) {
-                    controller.updateAIPersonality(value);
-                    Navigator.pop(context);
-                  }
+              _customRadioTile(
+                title: 'Minimalist',
+                subtitle: 'Short, direct answers only',
+                isSelected: controller.aiPersonality.value == 'Minimalist',
+                onTap: () {
+                  controller.updateAIPersonality('Minimalist');
+                  Navigator.pop(context);
                 },
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _customRadioTile({
+    required String title,
+    required String subtitle,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          children: [
+            Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? Colors.orange : Colors.grey,
+                  width: 2,
+                ),
+                color: isSelected ? Colors.orange : Colors.transparent,
+              ),
+              child: isSelected
+                  ? const Icon(
+                      Icons.check,
+                      size: 16,
+                      color: Colors.white,
+                    )
+                  : null,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
