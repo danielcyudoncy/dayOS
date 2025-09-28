@@ -1,5 +1,6 @@
 // features/dashboard/views/home/home_screen.dart
 import 'package:day_os/features/dashboard/controllers/home_controller.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
 import 'package:day_os/core/widgets/meal_tile.dart';
 import 'package:day_os/core/widgets/meeting_tile.dart';
 import 'package:day_os/core/widgets/morning_briefing_card.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text(
           'DailyOS',
@@ -28,34 +30,12 @@ class HomeScreen extends GetView<HomeController> {
         centerTitle: true,
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
-       actions: [
-          IconButton(
-            onPressed: () => Get.toNamed('/calendar'),
-            icon: const Icon(Icons.calendar_today, color: Colors.white),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
           ),
-          IconButton(
-            onPressed: () => Get.toNamed('/meals'),
-            icon: const Icon(Icons.restaurant, color: Colors.white),
-          ),
-          IconButton(
-            onPressed: () => Get.toNamed('/tasks'),
-            icon: const Icon(Icons.checklist, color: Colors.white),
-          ),
-          IconButton(
-            onPressed: () => Get.toNamed('/recap'),
-            icon: const Icon(Icons.nightlight_round, color: Colors.white),
-          ),
-          IconButton(
-            onPressed: () => Get.toNamed('/settings'),
-            icon: const Icon(Icons.settings, color: Colors.white),
-          ),
-          const SizedBox(width: 8),
-          CircleAvatar(
-            backgroundColor: Colors.white.withValues(alpha: 0.2),
-            child: const Icon(Icons.person, color: Colors.white, size: 18),
-          ),
-          const SizedBox(width: 12),
-        ],
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(

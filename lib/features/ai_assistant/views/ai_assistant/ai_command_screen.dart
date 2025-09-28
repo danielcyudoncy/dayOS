@@ -1,6 +1,7 @@
 // features/ai_assistant/views/ai_assistant/ai_command_screen.dart
 
 import 'package:day_os/features/ai_assistant/controllers/ai_controller.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
 import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,13 +15,16 @@ class AICommandScreen extends StatelessWidget {
     final controller = Get.put(AIController()); // We'll create this next
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text('Your AI Assistant', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       ),
       body: Container(

@@ -1,5 +1,7 @@
-// presentation/screens/morning/morning_briefing_screen.dart
+// features/dashboard/views/morning/morning_briefing_screen.dart
 import 'package:day_os/features/dashboard/controllers/morning_controller.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
+import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,18 @@ class MorningBriefingScreen extends StatelessWidget {
     final controller = Get.find<MorningController>();
 
     return Scaffold(
+      drawer: const AppDrawer(),
+      appBar: AppBar(
+        title: Text('Morning Briefing', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
+        backgroundColor: const Color(0xFFFF9800),
+        foregroundColor: Colors.white,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator.adaptive());

@@ -1,5 +1,6 @@
 // features/meals/views/meals/meal_planner_screen.dart
 import 'package:day_os/features/meals/controllers/meal_controller.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
 import 'package:day_os/core/widgets/meal_day_card.dart';
 import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,17 @@ class MealPlannerScreen extends StatelessWidget {
     final controller = Get.find<MealController>();
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text('Meal Planner', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () => _showDietaryPreferencesDialog(context, controller),
@@ -36,7 +44,7 @@ class MealPlannerScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               Color(0xFF1a1a2e), // Dark background
-              Color(0xFF8B5CF6), // Purple
+              Color.fromARGB(255, 61, 201, 43), // Purple
             ],
           ),
         ),
