@@ -1,5 +1,6 @@
-// presentation/screens/recap/evening_recap_screen.dart
+// features/dashboard/views/recap/evening_recap_screen.dart
 import 'package:day_os/features/dashboard/controllers/recap_controller.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,10 +13,17 @@ class EveningRecapScreen extends StatelessWidget {
     final controller = Get.find<RecapController>();
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: const Text('Evening Recap'),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {

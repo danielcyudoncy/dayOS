@@ -1,9 +1,10 @@
 // features/meals/views/grocery/grocery_list_screen.dart
 import 'package:day_os/data/models/grocery_item.dart';
 import 'package:day_os/features/meals/controllers/grocery_controller.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
 import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/Get.dart';
 
 
 class GroceryListScreen extends StatelessWidget {
@@ -14,10 +15,17 @@ class GroceryListScreen extends StatelessWidget {
     final controller = Get.find<GroceryController>();
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text('Grocery List', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () => _showAddItemDialog(context, controller),

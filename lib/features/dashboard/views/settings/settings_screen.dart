@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:day_os/core/theme/font_util.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
 import '../../controllers/settings_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -12,11 +13,18 @@ class SettingsScreen extends StatelessWidget {
     final controller = Get.find<SettingsController>();
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text('Settings', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
         elevation: 0,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(

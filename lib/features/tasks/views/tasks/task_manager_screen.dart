@@ -1,5 +1,6 @@
 // features/tasks/views/tasks/task_manager_screen.dart
 import 'package:day_os/features/tasks/controllers/task_controller.dart';
+import 'package:day_os/core/widgets/app_drawer.dart';
 import 'package:day_os/core/widgets/task_list_tile.dart';
 import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,17 @@ class TaskManagerScreen extends StatelessWidget {
     final controller = Get.find<TaskController>();
 
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: Text('My Tasks', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () => _showAddTaskDialog(context, controller),
