@@ -19,21 +19,25 @@ import 'package:day_os/features/dashboard/views/settings/settings_screen.dart';
 import 'package:day_os/features/tasks/views/tasks/task_manager_screen.dart';
 import 'package:day_os/core/widgets/splash_screen.dart';
 import 'package:day_os/core/widgets/onboarding_screen.dart';
+import 'package:day_os/core/widgets/sign_in_screen.dart';
+import 'package:day_os/core/widgets/sign_up_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
-  static const splash = '/splash';
-  static const onboarding = '/onboarding';
-  static const home = '/';
-  static const ai_command = '/ai';
-  static const calendar = '/calendar';
-  static const meals = '/meals';
-  static const grocery = '/grocery';
-  static const tasks = '/tasks';
-  static const recap = '/recap';
-  static const morning = '/morning';
-  static const settings = '/settings';  // NEW
-}
+   static const splash = '/splash';
+   static const onboarding = '/onboarding';
+   static const signin = '/signin';
+   static const signup = '/signup';
+   static const home = '/';
+   static const ai_command = '/ai';
+   static const calendar = '/calendar';
+   static const meals = '/meals';
+   static const grocery = '/grocery';
+   static const tasks = '/tasks';
+   static const recap = '/recap';
+   static const morning = '/morning';
+   static const settings = '/settings';
+ }
 
 class AppPages {
   static final routes = [
@@ -44,6 +48,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.onboarding,
       page: () => const OnboardingScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.signin,
+      page: () => const SignInScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.signup,
+      page: () => const SignUpScreen(),
     ),
     GetPage(
       name: AppRoutes.home,
