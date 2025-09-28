@@ -171,7 +171,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final storage = GetStorage();
     storage.write('hasSeenOnboarding', true);
 
-    // Navigate to home screen
-    Get.offAllNamed('/'); // This will clear all previous routes and go to home
+    // Check if user is authenticated
+    final isAuthenticated = storage.read('is_authenticated') ?? false;
+
+    if (isAuthenticated) {
+      // User is authenticated, go to home
+      Get.offAllNamed('/');
+    } else {
+      // User is not authenticated, show sign in screen
+      Get.offAllNamed('/signin');
+    }
   }
 }

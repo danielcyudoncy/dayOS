@@ -115,16 +115,18 @@ class CalendarScreen extends StatelessWidget {
             style: FontUtil.titleLarge(color: Colors.white, fontWeight: FontWeights.semiBold),
           ),
           const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            children: [
-              _buildAccountChip('Google Calendar', true, Colors.red),
-              _buildAccountChip('Outlook', true, Colors.blue),
-              _buildAccountChip('Zoom', true, Colors.green),
-              _buildAccountChip('Teams', false, Colors.orange),
-            ],
+          Center(
+            child: Wrap(
+              spacing: 18,
+              children: [
+                _buildAccountChip('Google Calendar', true, Colors.red),
+                _buildAccountChip('Outlook', true, Colors.blue),
+                _buildAccountChip('Zoom', true, Colors.green),
+                _buildAccountChip('Teams', false, Colors.orange),
+              ],
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 26),
           Row(
             children: [
               const Icon(

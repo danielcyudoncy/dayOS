@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen>
     // Start animation
     _animationController.forward();
 
-    // Navigate to next screen after 4 seconds
+    // Navigate to next screen after 1 second (reduced for testing)
     _navigateToNextScreen();
   }
 
@@ -55,19 +55,47 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  void _navigateToNextScreen() {
-    Future.delayed(const Duration(seconds: 4), () {
-      if (mounted) {
-        final storage = GetStorage();
-        final hasSeenOnboarding = storage.read('hasSeenOnboarding') ?? false;
+  void _navigateToNextScreen() async {
+    // Show splash for at least 1 second for branding
+    await Future.delayed(const Duration(seconds: 1));
 
-        if (hasSeenOnboarding) {
-          Get.offNamed('/');
-        } else {
-          Get.offNamed('/onboarding');
-        }
+    if (!mounted) return;
+
+    try {
+      final storage = GetStorage();
+
+      // Debug: Print current storage values
+      print('=== SPLASH SCREEN DEBUG ===');
+      print('hasSeenOnboarding: ${storage.read('hasSeenOnboarding')}');
+      print('is_authenticated: ${storage.read('is_authenticated')}');
+      print('user_email: ${storage.read('user_email')}');
+      print('===========================');
+
+      // Force navigation to sign in screen for testing
+      // TODO: Remove this after testing
+      print('🔐 TEST MODE: Navigating to sign in screen');
+      Get.offNamed('/signin');
+
+      /* Original logic - uncomment after testing
+      final hasSeenOnboarding = storage.read('hasSeenOnboarding') ?? false;
+      final isAuthenticated = storage.read('is_authenticated') ?? false;
+
+      if (!hasSeenOnboarding) {
+        print('🔄 Navigating to onboarding (first time user)');
+        Get.offNamed('/onboarding');
+      } else if (!isAuthenticated) {
+        print('🔐 Navigating to sign in (not authenticated)');
+        Get.offNamed('/signin');
+      } else {
+        print('🏠 Navigating to home (authenticated user)');
+        Get.offNamed('/');
       }
-    });
+      */
+    } catch (e) {
+      print('❌ Error in splash navigation: $e');
+      // Fallback to sign in screen if there's an error
+      Get.offNamed('/signin');
+    }
   }
 
   @override

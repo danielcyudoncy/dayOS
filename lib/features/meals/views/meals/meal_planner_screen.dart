@@ -44,7 +44,7 @@ class MealPlannerScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               Color(0xFF1a1a2e), // Dark background
-              Color.fromARGB(255, 61, 201, 43), // Purple
+              Color(0xFF8B5CF6), // Purple
             ],
           ),
         ),
