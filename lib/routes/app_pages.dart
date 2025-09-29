@@ -23,6 +23,7 @@ import 'package:day_os/core/widgets/onboarding_screen.dart';
 import 'package:day_os/core/widgets/sign_in_screen.dart';
 import 'package:day_os/core/widgets/sign_up_screen.dart';
 import 'package:day_os/core/widgets/forgot_password_screen.dart';
+import 'package:day_os/core/widgets/profile_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -31,6 +32,7 @@ class AppRoutes {
     static const signin = '/signin';
     static const signup = '/signup';
     static const forgotPassword = '/forgot-password';
+    static const profile = '/profile';
     static const home = '/';
     static const ai_command = '/ai';
     static const calendar = '/calendar';
@@ -65,6 +67,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.forgotPassword,
       page: () => const ForgotPasswordScreen(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => const ProfileScreen(),
       binding: AuthBinding(),
     ),
     GetPage(

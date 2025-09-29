@@ -385,6 +385,11 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Update user name
+  void updateUserName(String name) {
+    _userName.value = name;
+  }
+
   /// Navigate to home if authenticated, otherwise to sign in
   void handleAppStart() {
     if (_isAuthenticated.value) {
