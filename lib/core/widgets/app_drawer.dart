@@ -1,4 +1,5 @@
 // core/widgets/app_drawer.dart
+import 'dart:io';
 import 'dart:ui';
 import 'package:day_os/routes/app_pages.dart';
 import 'package:day_os/core/theme/font_util.dart';
@@ -14,6 +15,7 @@ class AppDrawer extends StatelessWidget {
     final storage = GetStorage();
     final userName = storage.read('user_name') ?? 'User';
     final userEmail = storage.read('user_email') ?? 'user@example.com';
+    final profileImagePath = storage.read('profile_image_path');
 
     return Drawer(
       child: Container(
@@ -56,13 +58,18 @@ class AppDrawer extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 35,
                       backgroundColor: Colors.transparent,
-                      child: Text(
-                        userName.isNotEmpty ? userName[0].toUpperCase() : 'U',
-                        style: FontUtil.headlineLarge(
-                          color: Colors.white,
-                          fontWeight: FontWeights.bold,
-                        ),
-                      ),
+                      backgroundImage: profileImagePath != null
+                          ? FileImage(File(profileImagePath))
+                          : null,
+                      child: profileImagePath == null
+                          ? Text(
+                              userName.isNotEmpty ? userName[0].toUpperCase() : 'U',
+                              style: FontUtil.headlineLarge(
+                                color: Colors.white,
+                                fontWeight: FontWeights.bold,
+                              ),
+                            )
+                          : null,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -95,11 +102,22 @@ class AppDrawer extends StatelessWidget {
 
             const SizedBox(height: 20),
 
+            // Profile Section
+           
+
+            const SizedBox(height: 8),
+
             // Navigation Items and App Info
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 children: [
+                   _buildDrawerItem(
+                    icon: Icons.person,
+                    title: 'My Profile',
+                    route: AppRoutes.profile,
+                    color: const Color(0xFF8B5CF6),
+                  ),
                   _buildDrawerItem(
                     icon: Icons.calendar_today,
                     title: 'My Calendar',
