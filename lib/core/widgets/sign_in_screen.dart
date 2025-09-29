@@ -167,7 +167,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             style: FontUtil.bodyMedium(color: Colors.grey[600]),
                           ),
                         ),
-                        const SizedBox(height: 52),
+                        const SizedBox(height: 32),
 
                         // Email field
                         TextFormField(
@@ -302,17 +302,17 @@ class _SignInScreenState extends State<SignInScreen> {
                         // Divider
                         Row(
                           children: [
-                            Expanded(child: Divider(color: Colors.grey[300])),
+                            Expanded(child: Divider(color: Colors.grey[600])),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
                                 "Or sign in with",
                                 style: FontUtil.bodyMedium(
-                                  color: Colors.grey[600],
+                                  color: Colors.grey[900],
                                 ),
                               ),
                             ),
-                            Expanded(child: Divider(color: Colors.grey[300])),
+                            Expanded(child: Divider(color: Colors.grey[600])),
                           ],
                         ),
                         const SizedBox(height: 24),
@@ -329,7 +329,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: Colors.grey[300]!),
+                                    border: Border.all(color: Colors.grey[900]!),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
