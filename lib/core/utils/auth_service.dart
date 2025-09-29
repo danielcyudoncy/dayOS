@@ -81,6 +81,27 @@ class AuthService extends GetxService {
     }
   }
 
+  Future<bool> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      print('Password reset email sent successfully to: $email');
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print('Password Reset Email Error: ${e.code} - ${e.message}');
+      if (e.code == 'invalid-email') {
+        print('The email address is not valid');
+      } else if (e.code == 'user-not-found') {
+        print('No user found with this email address');
+      } else {
+        print('Firebase Auth Error: ${e.code}');
+      }
+      return false;
+    } catch (e) {
+      print('Unexpected Password Reset Error: $e');
+      return false;
+    }
+  }
+
   Future<void> signOut() async {
     try {
       await _auth.signOut();

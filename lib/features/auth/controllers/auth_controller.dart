@@ -328,6 +328,63 @@ class AuthController extends GetxController {
     );
   }
 
+  /// Send password reset email
+  Future<bool> sendPasswordResetEmail(String email) async {
+    if (email.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Please enter your email address',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+
+    // Basic email validation
+    if (!GetUtils.isEmail(email)) {
+      Get.snackbar(
+        'Error',
+        'Please enter a valid email address',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+
+    try {
+      final success = await _authService.sendPasswordResetEmail(email);
+
+      if (success) {
+        Get.snackbar(
+          'Email Sent',
+          'Password reset instructions have been sent to your email',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+        return true;
+      } else {
+        Get.snackbar(
+          'Reset Failed',
+          'Unable to send reset email. Please check your email address and try again. Note: This feature requires proper Firebase configuration.',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 5),
+        );
+        return false;
+      }
+    } catch (e) {
+      print('Password reset error: $e');
+      Get.snackbar(
+        'Reset Failed',
+        'Unable to send reset email. Please check your email address and try again. Note: This feature requires proper Firebase configuration.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 5),
+      );
+      return false;
+    }
+  }
+
   /// Navigate to home if authenticated, otherwise to sign in
   void handleAppStart() {
     if (_isAuthenticated.value) {
