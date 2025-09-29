@@ -289,7 +289,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         // Forgot Password
                         Center(
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed('/forgot-password');
+                            },
                             child: Text(
                               "Forgot your password?",
                               style: FontUtil.bodyMedium(

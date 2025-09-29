@@ -22,23 +22,25 @@ import 'package:day_os/core/widgets/splash_screen.dart';
 import 'package:day_os/core/widgets/onboarding_screen.dart';
 import 'package:day_os/core/widgets/sign_in_screen.dart';
 import 'package:day_os/core/widgets/sign_up_screen.dart';
+import 'package:day_os/core/widgets/forgot_password_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
-   static const splash = '/splash';
-   static const onboarding = '/onboarding';
-   static const signin = '/signin';
-   static const signup = '/signup';
-   static const home = '/';
-   static const ai_command = '/ai';
-   static const calendar = '/calendar';
-   static const meals = '/meals';
-   static const grocery = '/grocery';
-   static const tasks = '/tasks';
-   static const recap = '/recap';
-   static const morning = '/morning';
-   static const settings = '/settings';
- }
+    static const splash = '/splash';
+    static const onboarding = '/onboarding';
+    static const signin = '/signin';
+    static const signup = '/signup';
+    static const forgotPassword = '/forgot-password';
+    static const home = '/';
+    static const ai_command = '/ai';
+    static const calendar = '/calendar';
+    static const meals = '/meals';
+    static const grocery = '/grocery';
+    static const tasks = '/tasks';
+    static const recap = '/recap';
+    static const morning = '/morning';
+    static const settings = '/settings';
+  }
 
 class AppPages {
   static final routes = [
@@ -58,6 +60,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.signup,
       page: () => const SignUpScreen(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.forgotPassword,
+      page: () => const ForgotPasswordScreen(),
       binding: AuthBinding(),
     ),
     GetPage(
