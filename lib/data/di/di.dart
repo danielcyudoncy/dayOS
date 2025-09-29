@@ -7,6 +7,7 @@ import 'package:day_os/data/datasources/remote/task_firestore_datasource.dart';
 import 'package:day_os/data/repositories/task_repository.dart';
 import 'package:day_os/core/utils/ai_service.dart';
 import 'package:day_os/core/utils/auth_service.dart';
+import 'package:day_os/features/auth/bindings/auth_binding.dart';
 import 'package:get/get.dart';
 
 Future<void> initDependencies() async {
@@ -23,4 +24,7 @@ Future<void> initDependencies() async {
   // Services (e.g., AI, Auth)
   Get.put(AIService());
   Get.put(AuthService());
+
+  // Bindings
+  AuthBinding().dependencies();
 }

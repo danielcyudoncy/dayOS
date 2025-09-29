@@ -77,7 +77,7 @@ class TaskManagerScreen extends StatelessWidget {
                       (task) =>
                           TaskListTile(task: task, controller: controller),
                     )
-                    .toList(),
+                    ,
                 const SizedBox(height: 24),
               ],
               if (personalTasks.isNotEmpty) ...[
@@ -91,7 +91,7 @@ class TaskManagerScreen extends StatelessWidget {
                       (task) =>
                           TaskListTile(task: task, controller: controller),
                     )
-                    .toList(),
+                    ,
                 const SizedBox(height: 24),
               ],
               if (completedTasks.isNotEmpty) ...[
@@ -105,7 +105,7 @@ class TaskManagerScreen extends StatelessWidget {
                       (task) =>
                           TaskListTile(task: task, controller: controller),
                     )
-                    .toList(),
+                    ,
               ],
               if (controller.allTasks.isEmpty) _buildEmptyState(controller),
             ],
@@ -227,7 +227,7 @@ class TaskManagerScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
-                  value: selectedCategory,
+                  initialValue: selectedCategory,
                   decoration: const InputDecoration(labelText: 'Category'),
                   items: ['Work', 'Personal'].map((category) {
                     return DropdownMenuItem(
