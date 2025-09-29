@@ -4,6 +4,7 @@ import 'package:day_os/features/ai_assistant/controllers/ai_controller.dart';
 import 'package:day_os/core/widgets/app_drawer.dart';
 import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 
@@ -20,6 +21,11 @@ class AICommandScreen extends StatelessWidget {
         title: Text('Your AI Assistant', style: FontUtil.headlineSmall(color: Colors.white, fontWeight: FontWeights.semiBold)),
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+        ),
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),

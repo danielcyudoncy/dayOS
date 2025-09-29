@@ -174,6 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           validator: _validateEmail,
+                          style: const TextStyle(color: Colors.black),
                           decoration: InputDecoration(
                             labelText: "Email Address",
                             labelStyle: TextStyle(color: Colors.grey[600]),
@@ -207,6 +208,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           controller: _passwordController,
                           obscureText: _obscurePassword,
                           validator: _validatePassword,
+                          style: const TextStyle(color: Colors.black),
                           decoration: InputDecoration(
                             labelText: "Password",
                             labelStyle: TextStyle(color: Colors.grey[600]),
@@ -418,7 +420,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future<void> _signIn() async {
     setState(() => _autoValidate = true);
-    
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -433,13 +435,11 @@ class _SignInScreenState extends State<SignInScreen> {
       if (success) {
         Get.offAllNamed('/');
       }
+      // If user doesn't exist, the auth controller will show a dialog
+      // and we don't need to do anything here
     } catch (e) {
-      Get.snackbar(
-        'Sign In Failed',
-        'Please check your credentials and try again',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Error handling is done in the auth controller
+      print('Sign in error: $e');
     } finally {
       setState(() => _isLoading = false);
     }

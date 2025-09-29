@@ -1,5 +1,6 @@
 // routes/app_pages.dart
 import 'package:day_os/features/ai_assistant/bindings/ai_binding.dart';
+import 'package:day_os/features/auth/bindings/auth_binding.dart';
 import 'package:day_os/features/meetings/bindings/calendar_binding.dart';
 import 'package:day_os/features/meals/bindings/grocery_binding.dart';
 import 'package:day_os/features/dashboard/bindings/home_binding.dart';
@@ -52,10 +53,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.signin,
       page: () => const SignInScreen(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: AppRoutes.signup,
       page: () => const SignUpScreen(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: AppRoutes.home,

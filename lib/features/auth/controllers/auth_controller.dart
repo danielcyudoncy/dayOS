@@ -36,6 +36,7 @@ class AuthController extends GetxController {
     _authMethod.value = _storage.read('auth_method') ?? '';
   }
 
+
   /// Sign in with email and password
   Future<bool> signInWithEmail(String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
@@ -50,29 +51,45 @@ class AuthController extends GetxController {
 
     _isLoading.value = true;
     try {
-      // TODO: Implement actual Firebase authentication
-      await Future.delayed(const Duration(seconds: 2));
+      // Check if user exists first
+      final userExists = await _authService.userExists(email);
 
-      // Store user data
-      _storage.write('user_email', email);
-      _storage.write('user_name', email.split('@')[0]);
-      _storage.write('is_authenticated', true);
-      _storage.write('auth_method', 'email');
+      if (!userExists) {
+        _showCreateAccountDialog();
+        return false;
+      }
 
-      // Update reactive variables
-      _isAuthenticated.value = true;
-      _userEmail.value = email;
-      _userName.value = email.split('@')[0];
-      _authMethod.value = 'email';
+      // Attempt to sign in with Firebase
+      final success = await _authService.signInWithEmail(email, password);
 
-      Get.snackbar(
-        'Success',
-        'Signed in successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+      if (success) {
+        // Get user info from auth service
+        final currentUser = _authService.getCurrentUser();
+        final userEmail = currentUser?.email ?? email;
+        final userName = userEmail.split('@')[0];
 
-      return true;
+        // Store user data
+        _storage.write('user_email', userEmail);
+        _storage.write('user_name', userName);
+        _storage.write('is_authenticated', true);
+        _storage.write('auth_method', 'email');
+
+        // Update reactive variables
+        _isAuthenticated.value = true;
+        _userEmail.value = userEmail;
+        _userName.value = userName;
+        _authMethod.value = 'email';
+
+        return true;
+      } else {
+        Get.snackbar(
+          'Sign In Failed',
+          'Please check your credentials and try again',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return false;
+      }
     } catch (e) {
       Get.snackbar(
         'Sign In Failed',
@@ -122,29 +139,43 @@ class AuthController extends GetxController {
 
     _isLoading.value = true;
     try {
-      // TODO: Implement actual Firebase authentication
-      await Future.delayed(const Duration(seconds: 2));
+      // Use actual Firebase authentication
+      final success = await _authService.signUpWithEmail(email, password);
 
-      // Store user data
-      _storage.write('user_email', email);
-      _storage.write('user_name', name);
-      _storage.write('is_authenticated', true);
-      _storage.write('auth_method', 'email');
+      if (success) {
+        // Get user info from auth service
+        final currentUser = _authService.getCurrentUser();
+        final userEmail = currentUser?.email ?? email;
 
-      // Update reactive variables
-      _isAuthenticated.value = true;
-      _userEmail.value = email;
-      _userName.value = name;
-      _authMethod.value = 'email';
+        // Store user data
+        _storage.write('user_email', userEmail);
+        _storage.write('user_name', name);
+        _storage.write('is_authenticated', true);
+        _storage.write('auth_method', 'email');
 
-      Get.snackbar(
-        'Success',
-        'Account created successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+        // Update reactive variables
+        _isAuthenticated.value = true;
+        _userEmail.value = userEmail;
+        _userName.value = name;
+        _authMethod.value = 'email';
 
-      return true;
+        Get.snackbar(
+          'Success',
+          'Account created successfully!',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+        return true;
+      } else {
+        Get.snackbar(
+          'Sign Up Failed',
+          'Please try again or check if the email is already registered',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return false;
+      }
     } catch (e) {
       Get.snackbar(
         'Sign Up Failed',
@@ -220,13 +251,6 @@ class AuthController extends GetxController {
       _userName.value = '';
       _authMethod.value = '';
 
-      Get.snackbar(
-        'Success',
-        'Signed out successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-
       // Navigate to sign in screen
       Get.offAllNamed('/signin');
     } catch (e) {
@@ -239,6 +263,69 @@ class AuthController extends GetxController {
     } finally {
       _isLoading.value = false;
     }
+  }
+
+  /// Show dialog for users who don't have an account
+  void _showCreateAccountDialog() {
+    Get.dialog(
+      AlertDialog(
+        title: const Text(
+          'Account Not Found',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        content: const Text(
+          'You don\'t have an account with us. Please create an account to continue.',
+          style: TextStyle(
+            color: Colors.black54,
+            fontSize: 16,
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back(); // Close dialog
+            },
+            child: const Text(
+              'Cancel',
+              style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.back(); // Close dialog
+              Get.toNamed('/signup'); // Navigate to sign up
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF5B7CFA),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+            ),
+            child: const Text(
+              'Create Account',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+      barrierDismissible: true,
+    );
   }
 
   /// Navigate to home if authenticated, otherwise to sign in

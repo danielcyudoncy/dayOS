@@ -1,8 +1,6 @@
 // core/utils/auth_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService extends GetxService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -36,6 +34,33 @@ class AuthService extends GetxService {
       return false;
     } catch (e) {
       print('Unexpected Sign In Error: $e');
+      return false;
+    }
+  }
+
+  Future<bool> userExists(String email) async {
+    try {
+      // Try to sign in with a dummy password to check if user exists
+      // This is a simple and reliable approach
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: 'dummy_password_12345',
+      );
+      // If we get here without exception, the user exists
+      await _auth.signOut(); // Sign out the dummy session
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return false; // User doesn't exist
+      } else if (e.code == 'wrong-password') {
+        return true; // User exists but password is wrong
+      } else if (e.code == 'invalid-credential') {
+        return true; // User exists but credential is invalid
+      }
+      print('Error checking if user exists: ${e.code} - ${e.message}');
+      return false;
+    } catch (e) {
+      print('Unexpected error checking if user exists: $e');
       return false;
     }
   }

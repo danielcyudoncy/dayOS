@@ -361,6 +361,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       controller: controller,
       keyboardType: keyboardType,
       validator: validator,
+      style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: TextStyle(color: Colors.grey[600]),
@@ -400,6 +401,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       controller: controller,
       obscureText: obscureText,
       validator: validator,
+      style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: TextStyle(color: Colors.grey[600]),

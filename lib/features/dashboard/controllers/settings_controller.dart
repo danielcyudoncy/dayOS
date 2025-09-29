@@ -1,6 +1,7 @@
 // features/dashboard/controllers/settings_controller.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:day_os/features/auth/controllers/auth_controller.dart';
 
 class SettingsController extends GetxController {
   // Integrations
@@ -91,12 +92,8 @@ class SettingsController extends GetxController {
   }
 
   void signOut() {
-    Get.snackbar(
-      'Signed Out',
-      'You have been signed out successfully',
-      backgroundColor: Colors.white,
-      colorText: Colors.black,
-    );
-    // Add real sign-out logic here (Firebase Auth, clearing local state, etc.)
+    // Use the AuthController to properly sign out the user
+    final authController = Get.find<AuthController>();
+    authController.signOut();
   }
 }

@@ -1,5 +1,6 @@
 // features/dashboard/views/settings/settings_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:day_os/core/theme/font_util.dart';
 import 'package:day_os/core/widgets/app_drawer.dart';
@@ -19,6 +20,11 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
         elevation: 0,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+        ),
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),

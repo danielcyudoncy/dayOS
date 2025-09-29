@@ -8,6 +8,7 @@ import 'package:day_os/core/widgets/section_title.dart';
 import 'package:day_os/core/widgets/task_tile.dart';
 import 'package:day_os/core/theme/font_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 
@@ -30,6 +31,11 @@ class HomeScreen extends GetView<HomeController> {
         centerTitle: true,
         backgroundColor: const Color(0xFF1a1a2e),
         foregroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+        ),
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),
