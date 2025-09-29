@@ -85,7 +85,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 30),
 
                     // Logo
                     Text(
@@ -96,7 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -107,7 +107,7 @@ class _SignInScreenState extends State<SignInScreen> {
               left: 20,
               right: 20,
               bottom: 0,
-              top: 280, // Raised top position for background
+              top: 240, // Raised top position for background
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class _SignInScreenState extends State<SignInScreen> {
               left: 0,
               right: 0,
               bottom: 0,
-              top: 300, // Original top position for main container
+              top: 260, // Original top position for main container
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(32),
